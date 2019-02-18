@@ -1,0 +1,10 @@
+name: Firebase deploy
+image: /firebase-deploy:0.0.0
+description: Deploy your code to Firebase using this pipe
+repository: https://bitbucket.org/firebase-deploy/atlassian
+maintainer: bitbucketci-team@atlassian.com
+icon: https://bitbucket.org/atlassian/firebase-deploy/raw/master/logo.svg
+tags:
+    - deployment
+    - firebase
+  
