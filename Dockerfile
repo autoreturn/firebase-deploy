@@ -1,4 +1,10 @@
-FROM python:3.7-slim
+FROM python:3.7
+
+# https://github.com/nodesource/distributions/blob/master/README.md#installation-instructions
+RUN curl -sL https://deb.nodesource.com/setup_11.x | bash - && \
+    apt-get install -y nodejs && \
+    npm install -g firebase-tools
+
 COPY pipe /usr/bin/
 COPY requirements.txt /usr/bin
 WORKDIR /usr/bin
