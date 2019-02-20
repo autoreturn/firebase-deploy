@@ -66,3 +66,7 @@ If you’re reporting an issue, please include:
 - the version of the pipe
 - relevant logs and error messages
 - steps to reproduce
+
+## License
+Copyright (c) 2018 Atlassian and others.
+Apache 2.0 licensed, see [LICENSE.txt](LICENSE.txt) file.
