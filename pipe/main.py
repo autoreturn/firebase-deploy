@@ -60,8 +60,13 @@ def run_pipe():
     else:
         # get the project id from .firebaserc
         logger.info('Project id not specified, trying to fectch it from .firebaserc')
-        data = json.load(open('.firebaserc'))
-        project = data['projects']['default']
+        try:
+            data = json.load(open('.firebaserc'))
+            project = data['projects']['default']
+        except FileNotFoundError as e:
+            fail(message='.firebaserc file is missing and is required')
+        except KeyError as e:
+            fail(message='Was no able to find project ID in .firebaserc. Check your configuration.')
 
     args.extend(['deploy', '--message', message])
 

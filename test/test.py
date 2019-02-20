@@ -43,8 +43,19 @@ def test_success():
     docker_image,
   ]
 
+def test_success_with_project_id():
+  working_dir = os.path.join(os.getcwd(), '.firebaseapp')
+  args = [
+    'docker',
+    'run',
+    '-e', f'FIREBASE_TOKEN={os.getenv("FIREBASE_TOKEN")}',
+    '-e', f'PROJECT=pipes-ci',
+    '-v', f'{working_dir}:{working_dir}',
+    '-w', working_dir,
+    docker_image,
+  ]
+
   result = subprocess.run(args, check=False, text=True, capture_output=True)
-  import pdb;pdb.set_trace()
   assert result.returncode == 0
   assert 'Successfully deployed project' in result.stdout
   
