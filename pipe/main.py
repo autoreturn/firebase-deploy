@@ -6,6 +6,8 @@ import subprocess
 
 from colorama import Fore, Style
 
+_debug = False
+
 def configure_logger():
   handler = colorlog.StreamHandler()
   handler.setFormatter(colorlog.ColoredFormatter(
@@ -32,6 +34,8 @@ def enable_debug():
   debug = get_variable('DEBUG', required=False, default="False").lower()
   if debug == 'true':
     logger.info('Enabling debug mode.')
+    global _debug
+    _debug = True
     logger.setLevel('DEBUG')
 
 def success(message='Success'):
@@ -54,6 +58,9 @@ def run_pipe():
         'firebase',
         '--token', get_variable('FIREBASE_TOKEN', required=True),
     ]
+
+    if _debug:
+        args.append('--debug')
 
     if project is not None:
         args.extend(['--project', project])
