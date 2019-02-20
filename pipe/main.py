@@ -51,9 +51,8 @@ def run_pipe():
 
     args = [
         'firebase',
-        'deploy',
-         '--token', get_variable('FIREBASE_TOKEN', required=True),
-         '--message', message]
+        '--token', get_variable('FIREBASE_TOKEN', required=True),
+    ]
 
     if project is not None:
         args.extend(['--project', project])
@@ -62,6 +61,10 @@ def run_pipe():
         logger.info('Project id not specified, trying to fectch it from .firebaserc')
         data = json.load(open('.firebaserc'))
         project = data['projects']['default']
+
+    args.extend(['deploy', '--message', message])
+
+    args.extend(get_variable('EXTRA_ARGS', default='').split())
 
     logger.info('Starting deployment of the project to firebase')
 

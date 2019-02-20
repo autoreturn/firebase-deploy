@@ -23,6 +23,7 @@ script:
 | FIREBASE_TOKEN (*)    | Firebase API key |
 | PROJECT_ID            | Firebase project ID. Default to the one specified in the `.firebaserc` file |
 | MESSAGE               | Deployment message. Default: `Deploy $BITBUCKET_COMMIT from $BITBUCKET_REPO` |
+| EXTRA_ARGS            | Extra arguments to be passed to the firebase CLI (see Firebase docs for more details). Defaults to `""`.
 | DEBUG                 | Turn on extra debug information. Default: `false`. |
 
 _(*) = required variable._
@@ -53,6 +54,7 @@ script:
       FIREBASE_TOKEN: $FIREBASE_TOKEN
       PROJECT_ID: "myAwesomeProject"
       MESSAGE: "Deploying myAwesomeProject"
+      EXTRA_ARGS: "--only functions"
       DEBUG: "true"
 ```
 

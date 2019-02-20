@@ -18,7 +18,7 @@ def docker_build():
   subprocess.run(args, check=True)
 
 
-def setup():
+def setup_module():
   docker_build()
 
 def test_no_parameters():
@@ -44,7 +44,24 @@ def test_success():
   ]
 
   result = subprocess.run(args, check=False, text=True, capture_output=True)
+  import pdb;pdb.set_trace()
   assert result.returncode == 0
   assert 'Successfully deployed project' in result.stdout
   
+
+def test_success_extra_args():
+  working_dir = os.path.join(os.getcwd(), '.firebaseapp')
+  args = [
+    'docker',
+    'run',
+    '-e', f'FIREBASE_TOKEN={os.getenv("FIREBASE_TOKEN")}',
+    '-e', f'EXTRA_ARGS=--only hosting',
+    '-v', f'{working_dir}:{working_dir}',
+    '-w', working_dir,
+    docker_image,
+  ]
+
+  result = subprocess.run(args, check=False, text=True, capture_output=True)
+  assert result.returncode == 0
+  assert 'Successfully deployed project' in result.stdout
 
