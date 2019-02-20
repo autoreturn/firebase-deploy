@@ -45,9 +45,10 @@ def fail(message='Fail!'):
 def run_pipe():
     logger.info('Executing the pipe...')
     project = get_variable('PROJECT_ID')
-    commit = os.getenv('BITBUCKET_COMMIT', 'local')
-    repo = os.getenv('BITBUCKET_REPO', 'local')
-    message = get_variable('MESSAGE', default=f'Deploy {commit} from {repo}')
+    commit = get_variable('BITBUCKET_COMMIT', default='local')
+    repo = get_variable('BITBUCKET_REPO_SLUG', default='local')
+    account = get_variable('BITBUCKET_REPO_OWNER', default='local')
+    message = get_variable('MESSAGE', default=f'Deploy {commit} from https://bitbucket.org/{account}/{repo}')
 
     args = [
         'firebase',
