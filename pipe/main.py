@@ -62,9 +62,7 @@ def run_pipe():
     if _debug:
         args.append('--debug')
 
-    if project is not None:
-        args.extend(['--project', project])
-    else:
+    if project is None:
         # get the project id from .firebaserc
         logger.info('Project id not specified, trying to fectch it from .firebaserc')
         try:
@@ -75,16 +73,17 @@ def run_pipe():
         except KeyError as e:
             fail(message='Was no able to find project ID in .firebaserc. Check your configuration.')
 
+    args.extend(['--project', project])
     args.extend(['deploy', '--message', message])
 
     args.extend(get_variable('EXTRA_ARGS', default='').split())
 
-    logger.info('Starting deployment of the project to firebase')
+    logger.info('Starting deployment of the project to Firebase.')
 
-    result = subprocess.run(args, check=False, capture_output=True)
+    result = subprocess.run(args, check=False, capture_output=True, text=True, encoding="utf-8")
 
     if result.returncode != 0:
-        fail(message=result.stderr)
+        fail(message=result.stderr.strip())
 
     success(f'Successfully deployed project {project}. Project link: https://console.firebase.google.com/project/{project}/overview')
 

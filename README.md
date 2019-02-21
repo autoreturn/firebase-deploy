@@ -1,9 +1,6 @@
 # Bitbucket Pipelines Pipe: Firebase deploy
 
-Deploy your code to [Firebase](https://firebase.google.com/) using this pipe.
-
-This pipe deploys code and assets from your project directory to your Firebase project. 
-For Firebase Hosting, a firebase.json configuration file is required.
+Deploy your code to [Firebase](https://firebase.google.com/).
 
 ## YAML Definition
 
@@ -14,7 +11,10 @@ script:
   - pipe: atlassian/firebase-deploy:0.0.0
     variables:
       FIREBASE_TOKEN: $FIREBASE_TOKEN
-      # DEBUG: "<boolean>" # Optional
+      # PROJECT_ID: "<string>" # Optional.            
+      # MESSAGE: "<string>" # Optional.               
+      # EXTRA_ARGS: "<string>" # Optional.
+      # DEBUG: "<boolean>" # Optional.
 ```
 ## Variables
 
@@ -23,10 +23,14 @@ script:
 | FIREBASE_TOKEN (*)    | Firebase API key |
 | PROJECT_ID            | Firebase project ID. Defaults to the one specified in the `.firebaserc` file |
 | MESSAGE               | Deployment message. Default: `Deploy ${BITBUCKET_COMMIT} from https://bitbucket.org/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}` |
-| EXTRA_ARGS            | Extra arguments to be passed to the firebase CLI (see Firebase docs for more details). Defaults to `""`.
+| EXTRA_ARGS            | Extra arguments to be passed to the Firebase CLI (see Firebase docs for more details). Defaults to `""`.
 | DEBUG                 | Turn on extra debug information. Default: `false`. |
 
 _(*) = required variable._
+
+## Details
+This pipe deploys code and assets from your project directory to your Firebase project. 
+For Firebase Hosting, a firebase.json configuration file is required.
 
 ## Prerequisites
 
