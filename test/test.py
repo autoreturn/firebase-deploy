@@ -33,7 +33,7 @@ def test_no_parameters():
   assert 'FIREBASE_TOKEN variable missing.' in result.stderr
 
 def test_success():
-  working_dir = os.path.join(os.getcwd(), '.firebaseapp')
+  working_dir = os.path.join(os.getcwd(), 'test', '.firebaseapp')
   args = [
     'docker',
     'run',
@@ -48,7 +48,7 @@ def test_success():
   assert 'Successfully deployed project' in result.stdout
 
 def test_success_with_project_id():
-  working_dir = os.path.join(os.getcwd(), '.firebaseapp')
+  working_dir = os.path.join(os.getcwd(), 'test', '.firebaseapp')
   args = [
     'docker',
     'run',
@@ -65,7 +65,7 @@ def test_success_with_project_id():
   
 
 def test_success_extra_args():
-  working_dir = os.path.join(os.getcwd(), '.firebaseapp')
+  working_dir = os.path.join(os.getcwd(), 'test', '.firebaseapp')
   args = [
     'docker',
     'run',
