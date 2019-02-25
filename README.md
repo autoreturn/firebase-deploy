@@ -11,10 +11,10 @@ script:
   - pipe: atlassian/firebase-deploy:0.0.0
     variables:
       FIREBASE_TOKEN: $FIREBASE_TOKEN
-      # PROJECT_ID: "<string>" # Optional.            
-      # MESSAGE: "<string>" # Optional.               
-      # EXTRA_ARGS: "<string>" # Optional.
-      # DEBUG: "<boolean>" # Optional.
+      # PROJECT_ID: '<string>' # Optional.            
+      # MESSAGE: '<string>' # Optional.               
+      # EXTRA_ARGS: '<string>' # Optional.
+      # DEBUG: '<boolean>' # Optional.
 ```
 ## Variables
 
@@ -23,7 +23,7 @@ script:
 | FIREBASE_TOKEN (*)    | Firebase API key |
 | PROJECT_ID            | Firebase project ID. Default: `default` |
 | MESSAGE               | Deployment message. Default: `Deploy ${BITBUCKET_COMMIT} from https://bitbucket.org/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}` |
-| EXTRA_ARGS            | Extra arguments to be passed to the Firebase CLI (see Firebase docs for more details). Defaults to `""`.
+| EXTRA_ARGS            | Extra arguments to be passed to the Firebase CLI (see Firebase docs for more details). Defaults to `'`.
 | DEBUG                 | Turn on extra debug information. Default: `false`. |
 
 _(*) = required variable._
@@ -39,6 +39,7 @@ You are going to need to install the Firebase CLI and generate an authentication
 * [Installing the Firebase CLI](https://firebase.google.com/docs/cli/#install_the_firebase_cli)
 * You'll need to use `login:ci` command to generate an authentication token. See the [command reference](https://firebase.google.com/docs/cli/#administrative_commands).
 
+## Examples
 
 Basic example:
 
@@ -56,10 +57,10 @@ script:
   - pipe: atlassian/firebase-deploy:0.0.0
     variables:
       FIREBASE_TOKEN: $FIREBASE_TOKEN
-      PROJECT_ID: "myAwesomeProject"
-      MESSAGE: "Deploying myAwesomeProject"
-      EXTRA_ARGS: "--only functions"
-      DEBUG: "true"
+      PROJECT_ID: 'myAwesomeProject'
+      MESSAGE: 'Deploying myAwesomeProject'
+      EXTRA_ARGS: '--only functions'
+      DEBUG: 'true'
 ```
 
 ## Support
