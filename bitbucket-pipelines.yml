@@ -7,6 +7,7 @@ test: &test
     image: python:3.7-slim
     script:
     - pip install pytest
+    - pip install -r requirements.txt
     - pytest test/test.py
     services:
     - docker
