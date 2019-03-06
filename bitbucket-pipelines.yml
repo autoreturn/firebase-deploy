@@ -8,7 +8,7 @@ test: &test
     script:
     - pip install pytest
     - pip install -r requirements.txt
-    - pytest test/test.py
+    - pytest test/test.py --junitxml=test-reports/report.xml
     services:
     - docker
 
