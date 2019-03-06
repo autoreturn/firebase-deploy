@@ -32,7 +32,7 @@ def test_no_parameters():
   assert result.returncode == 1
   assert 'FIREBASE_TOKEN variable missing.' in result.stderr
 
-def test_success():
+def test_project_deployed_successfully():
   working_dir = os.path.join(os.getcwd(), 'test', '.firebaseapp')
   args = [
     'docker',
