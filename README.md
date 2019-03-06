@@ -10,7 +10,7 @@ Add the following snippet to the script section of your `bitbucket-pipelines.yml
 script:
   - pipe: atlassian/firebase-deploy:0.0.0
     variables:
-      FIREBASE_TOKEN: $FIREBASE_TOKEN
+      FIREBASE_TOKEN: '<string>'
       # PROJECT_ID: '<string>' # Optional.            
       # MESSAGE: '<string>' # Optional.               
       # EXTRA_ARGS: '<string>' # Optional.
