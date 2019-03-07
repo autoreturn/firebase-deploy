@@ -1,0 +1,6 @@
+[
+  {
+    "description": "Changed the docker image in build",
+    "type": "minor"
+  }
+]
