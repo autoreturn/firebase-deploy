@@ -1,0 +1,10 @@
+[
+  {
+    "description": "Fixed CI scripts",
+    "type": "patch"
+  },
+  {
+    "description": "Initial release",
+    "type": "minor"
+  }
+]
