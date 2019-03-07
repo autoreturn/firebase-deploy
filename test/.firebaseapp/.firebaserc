@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "pipes-ci",
+    "production": "pipes-prod"
+  }
+}
