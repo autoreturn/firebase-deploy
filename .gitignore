@@ -24,3 +24,6 @@ yarn-error.log*
 
 firebase-debug.log
 package-lock.json
+
+.python-version
+__pycache__
