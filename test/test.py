@@ -4,7 +4,9 @@ import datetime
 
 import requests
 
+
 docker_image = 'bitbucketpipelines/demo-pipe-python:ci' + os.getenv('BITBUCKET_BUILD_NUMBER', 'local')
+
 
 def docker_build():
   """
@@ -35,6 +37,7 @@ index_template = """
 now = None
 public_project_url = 'https://pipes-ci.firebaseapp.com/'
 
+
 def setup_module():
   path = os.path.join(os.path.dirname(__file__), '.firebaseapp/public/index.html')
   with open(path, 'w') as index:
@@ -42,6 +45,7 @@ def setup_module():
     now = datetime.datetime.now().isoformat()
     index.write(index_template.format(dt=now))
   docker_build()
+
 
 def test_no_parameters():
   args = [
@@ -53,6 +57,7 @@ def test_no_parameters():
   result = subprocess.run(args, check=False, text=True, capture_output=True)
   assert result.returncode == 1
   assert 'FIREBASE_TOKEN variable missing.' in result.stderr
+
 
 def test_project_deployed_successfully():
   working_dir = os.path.join(os.getcwd(), 'test', '.firebaseapp')
@@ -89,7 +94,7 @@ def test_success_with_project_id():
   result = subprocess.run(args, check=False, text=True, capture_output=True)
   assert result.returncode == 0
   assert 'Successfully deployed project' in result.stdout
-  
+
 
 def test_success_extra_args():
   working_dir = os.path.join(os.getcwd(), 'test', '.firebaseapp')
@@ -107,3 +112,19 @@ def test_success_extra_args():
   assert result.returncode == 0
   assert 'Successfully deployed project' in result.stdout
 
+
+def test_success_debug():
+  working_dir = os.path.join(os.getcwd(), 'test', '.firebaseapp')
+  args = [
+    'docker',
+    'run',
+    '-e', f'FIREBASE_TOKEN={os.getenv("FIREBASE_TOKEN")}',
+    '-e', f'DEBUG=true',
+    '-v', f'{working_dir}:{working_dir}',
+    '-w', working_dir,
+    docker_image,
+  ]
+
+  result = subprocess.run(args, check=False, text=True, capture_output=True)
+  assert result.returncode == 0
+  assert 'Successfully deployed project' in result.stdout
