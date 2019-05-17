@@ -130,7 +130,7 @@ def test_success_debug():
   assert 'Successfully deployed project' in result.stdout
 
 
-def test_supbrpcess_streams_output():
+def test_subprocess_streams_output():
   working_dir = os.path.join(os.getcwd(), 'test', '.firebaseapp')
   args = [
     'docker',
