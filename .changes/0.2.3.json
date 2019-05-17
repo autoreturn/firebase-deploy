@@ -1,0 +1,6 @@
+[
+  {
+    "description": "Fix crashes the pipe in debug mode",
+    "type": "patch"
+  }
+]
