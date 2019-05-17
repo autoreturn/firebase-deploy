@@ -7,9 +7,10 @@ RUN apt-get update && \
     apt-get install -y nodejs && \
     npm install -g firebase-tools
 
-COPY pipe /usr/bin/
 COPY requirements.txt /usr/bin
 WORKDIR /usr/bin
-# RUN pip install --upgrade setuptools
 RUN pip install -r requirements.txt
+
+COPY pipe /usr/bin/
+
 ENTRYPOINT ["python3", "/usr/bin/main.py"]

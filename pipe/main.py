@@ -44,7 +44,12 @@ def run_pipe():
 
     logger.info('Starting deployment of the project to Firebase.')
 
-    result = subprocess.run(args, check=False, capture_output=True, text=True, encoding="utf-8")
+    result = subprocess.run(args,
+                            check=False, 
+                            text=True, 
+                            encoding="utf-8", 
+                            stdout=sys.stdout, 
+                            stderr=sys.stderr)
 
     if result.returncode != 0:
         fail(message=result.stderr.strip())
