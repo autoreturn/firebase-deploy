@@ -1,6 +1,10 @@
 # Changelog
 Note: version releases in the 0.x.y range may introduce breaking changes.
 
+## 0.2.4
+
+- patch: Improved the outputs of the pipe by streaming the process in realtime
+
 ## 0.2.3
 
 - patch: Fix crashes the pipe in debug mode
