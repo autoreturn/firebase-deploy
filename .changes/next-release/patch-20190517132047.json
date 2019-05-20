@@ -1,0 +1,4 @@
+{
+  "type": "patch",
+  "description": "Improved the outputs of the pipe by streaming the process in realtime"
+}
