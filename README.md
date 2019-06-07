@@ -21,7 +21,7 @@ Add the following snippet to the script section of your `bitbucket-pipelines.yml
 | --------------------- | ----------------------------------------------------------- |
 | FIREBASE_TOKEN (*)    | Firebase API key |
 | PROJECT_ID            | Firebase project ID. Default: `default` |
-| MESSAGE               | Deployment message. Default: `Deploy ${BITBUCKET_COMMIT} from https://bitbucket.org/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}` |
+| MESSAGE               | Deployment message. Default: `Deploy ${BITBUCKET_COMMIT} from https://bitbucket.org/${BITBUCKET_WORKSPACE}/${BITBUCKET_REPO_SLUG}` |
 | EXTRA_ARGS            | Extra arguments to be passed to the Firebase CLI (see Firebase docs for more details). Defaults to `'`.
 | DEBUG                 | Turn on extra debug information. Default: `false`. |
 

@@ -15,8 +15,8 @@ def run_pipe():
     project = get_variable('PROJECT_ID')
     commit = get_variable('BITBUCKET_COMMIT', default='local')
     repo = get_variable('BITBUCKET_REPO_SLUG', default='local')
-    account = get_variable('BITBUCKET_REPO_OWNER', default='local')
-    message = get_variable('MESSAGE', default=f'Deploy {commit} from https://bitbucket.org/{account}/{repo}')
+    workspace = get_variable('BITBUCKET_WORKSPACE', default='local')
+    message = get_variable('MESSAGE', default=f'Deploy {commit} from https://bitbucket.org/{workspace}/{repo}')
 
     args = [
         'firebase',
