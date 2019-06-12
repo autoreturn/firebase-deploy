@@ -1,0 +1,6 @@
+[
+  {
+    "description": "BITBUCKET_REPO_OWNER is deprecated in favor of BITBUCKET_WORKSPACE",
+    "type": "minor"
+  }
+]
