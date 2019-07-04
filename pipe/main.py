@@ -52,7 +52,7 @@ def run_pipe():
                             stderr=sys.stderr)
 
     if result.returncode != 0:
-        fail(message=result.stderr.strip())
+        fail(message=result.stderr.strip() if result.stderr is not None else result.stderr)
 
     success(f'Successfully deployed project {project}. Project link: https://console.firebase.google.com/project/{project}/overview')
 
