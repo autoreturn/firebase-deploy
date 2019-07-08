@@ -144,3 +144,20 @@ def test_subprocess_streams_output():
   result = subprocess.run(args, check=False, text=True, capture_output=True)
   assert result.returncode == 0
   assert 'Deploy complete!' in result.stdout
+
+
+def test_deploy_failed():
+  working_dir = os.path.join(os.getcwd(), 'test', '.firebaseapp')
+  args = [
+    'docker',
+    'run',
+    '-e', f'FIREBASE_TOKEN={os.getenv("FIREBASE_TOKEN")}',
+    '-e', f'EXTRA_ARGS=--only hosting:target-name-not-exist',
+    '-v', f'{working_dir}:{working_dir}',
+    '-w', working_dir,
+    docker_image,
+  ]
+
+  result = subprocess.run(args, check=False, text=True, capture_output=True)
+  assert result.returncode == 1
+  assert 'Deployment failed' in result.stdout
