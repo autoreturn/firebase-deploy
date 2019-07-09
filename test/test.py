@@ -161,3 +161,4 @@ def test_deploy_failed():
   result = subprocess.run(args, check=False, text=True, capture_output=True)
   assert result.returncode == 1
   assert 'Deployment failed' in result.stdout
+  assert 'Error:' in result.stderr
