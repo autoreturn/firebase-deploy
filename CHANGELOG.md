@@ -1,6 +1,10 @@
 # Changelog
 Note: version releases in the 0.x.y range may introduce breaking changes.
 
+## 0.3.1
+
+- patch: Fix fail status processing
+
 ## 0.3.0
 
 - minor: BITBUCKET_REPO_OWNER is deprecated in favor of BITBUCKET_WORKSPACE
