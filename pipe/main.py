@@ -52,9 +52,10 @@ def run_pipe():
                             stderr=sys.stderr)
 
     if result.returncode != 0:
-        fail(message=result.stderr.strip())
+        fail(message=f'Deployment failed.')
 
     success(f'Successfully deployed project {project}. Project link: https://console.firebase.google.com/project/{project}/overview')
+
 
 if __name__ == '__main__':
     logger = configure_logger()

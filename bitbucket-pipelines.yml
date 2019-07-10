@@ -1,6 +1,39 @@
 image:
   name: atlassian/default-image:2
 
+
+release-canary: &release-canary
+  step:
+    name: Release canary version
+    image: python:3.7
+    script:
+      - set -ex
+      - pip install semversioner
+      - VERSION=$(semversioner current-version)
+      - IMAGE=bitbucketpipelines/$BITBUCKET_REPO_SLUG
+      - echo ${DOCKERHUB_PASSWORD} | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
+      - docker build -t ${IMAGE} .
+      - docker tag ${IMAGE} ${IMAGE}:${VERSION}.${BITBUCKET_BUILD_NUMBER}-canary
+      - docker push ${IMAGE}:${VERSION}.${BITBUCKET_BUILD_NUMBER}-canary
+    services:
+      - docker
+
+release-dev: &release-dev
+  step:
+    name: Release development version
+    image: python:3.7
+    script:
+      - set -ex
+      - pip install semversioner
+      - VERSION=$(semversioner current-version)
+      - IMAGE=bitbucketpipelines/$BITBUCKET_REPO_SLUG
+      - echo ${DOCKERHUB_PASSWORD} | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
+      - docker build -t ${IMAGE} .
+      - docker tag ${IMAGE} ${IMAGE}:${VERSION}.${BITBUCKET_BUILD_NUMBER}-dev
+      - docker push ${IMAGE}:${VERSION}.${BITBUCKET_BUILD_NUMBER}-dev
+    services:
+      - docker
+
 test: &test
   step:
     name: Test
@@ -24,10 +57,15 @@ push: &push
     services:
     - docker
 
+
 pipelines:
   default:
   - <<: *test
+  - <<: *release-canary
   branches:
     master:
     - <<: *test
     - <<: *push
+    develop:
+    - <<: *test
+    - <<: *release-dev
