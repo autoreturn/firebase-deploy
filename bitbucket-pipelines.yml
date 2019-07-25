@@ -40,7 +40,6 @@ test: &test
     image: python:3.7-slim
     script:
     - pip install -r test/requirements.txt
-    - pip install -r requirements.txt
     - pytest test/test.py --junitxml=test-reports/report.xml
     services:
     - docker
