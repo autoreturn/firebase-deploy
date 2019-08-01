@@ -20,9 +20,9 @@ Add the following snippet to the script section of your `bitbucket-pipelines.yml
 | Variable              | Usage                                                       |
 | --------------------- | ----------------------------------------------------------- |
 | FIREBASE_TOKEN (*)    | Firebase API key |
-| PROJECT_ID            | Firebase project ID. Default: `default` |
+| PROJECT_ID            | Firebase project ID. Default: `default` (the pipe will use **.firebaserc** file to get the default project id.   |
 | MESSAGE               | Deployment message. Default: `Deploy ${BITBUCKET_COMMIT} from https://bitbucket.org/${BITBUCKET_WORKSPACE}/${BITBUCKET_REPO_SLUG}` |
-| EXTRA_ARGS            | Extra arguments to be passed to the Firebase CLI (see Firebase docs for more details). Defaults to `'`.
+| EXTRA_ARGS            | Extra arguments to be passed to the Firebase CLI (see Firebase docs for more details). Default: `'`.
 | DEBUG                 | Turn on extra debug information. Default: `false`. |
 
 _(*) = required variable._
