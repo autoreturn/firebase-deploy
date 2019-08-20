@@ -41,6 +41,7 @@ test: &test
     script:
     - pip install -r test/requirements.txt
     - pytest test/test.py --junitxml=test-reports/report.xml
+    - flake8 --ignore E501,E125
     services:
     - docker
 
