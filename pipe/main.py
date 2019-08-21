@@ -1,11 +1,9 @@
-import colorlog
-import os
 import sys
 import json
 import subprocess
 
 
-from bitbucket_pipes_toolkit import Pipe, get_variable, get_logger, enable_debug
+from bitbucket_pipes_toolkit import Pipe, get_variable, get_logger
 
 
 schema = {
@@ -13,7 +11,7 @@ schema = {
     "PROJECT_ID": {"required": False, "type": "string", "nullable": True, "default": None},
     "MESSAGE": {"type": "string", "required": False, "nullable": True, "default": None},
     "EXTRA_ARGS": {"type": "string", "required": False, "default": ''},
-    "DEBUG": {"type": "boolean", "required": False, "default": False} 
+    "DEBUG": {"type": "boolean", "required": False, "default": False}
 }
 
 
@@ -21,7 +19,6 @@ logger = get_logger()
 
 
 class FirebaseDeploy(Pipe):
-  
 
     def run(self):
         logger.info('Executing the pipe...')
@@ -52,10 +49,10 @@ class FirebaseDeploy(Pipe):
             try:
                 data = json.load(open('.firebaserc'))
                 project = data['projects']['default']
-            except FileNotFoundError as e:
-                fail(message='.firebaserc file is missing and is required')
-            except KeyError as e:
-                fail(message='Was not able to find project ID in .firebaserc. Check your configuration.')
+            except FileNotFoundError:
+                self.fail(message='.firebaserc file is missing and is required')
+            except KeyError:
+                self.fail(message='Was not able to find project ID in .firebaserc. Check your configuration.')
 
         args.extend(['--project', project])
         args.extend(['deploy', '--message', message])
@@ -65,10 +62,10 @@ class FirebaseDeploy(Pipe):
         logger.info('Starting deployment of the project to Firebase.')
 
         result = subprocess.run(args,
-                                check=False, 
-                                text=True, 
-                                encoding="utf-8", 
-                                stdout=sys.stdout, 
+                                check=False,
+                                text=True,
+                                encoding="utf-8",
+                                stdout=sys.stdout,
                                 stderr=sys.stderr)
 
         if result.returncode != 0:
