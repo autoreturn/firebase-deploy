@@ -1,0 +1,4 @@
+{
+  "type": "patch",
+  "description": "Updated pipes toolkit version to fix coloring of log info messages."
+}
