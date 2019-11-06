@@ -2,6 +2,7 @@ import sys
 import json
 import subprocess
 
+import yaml
 
 from bitbucket_pipes_toolkit import Pipe, get_variable, get_logger
 
@@ -21,6 +22,7 @@ logger = get_logger()
 class FirebaseDeploy(Pipe):
 
     def run(self):
+        super().run()
         logger.info('Executing the pipe...')
         project = self.get_variable('PROJECT_ID')
         token = self.get_variable('FIREBASE_TOKEN')
@@ -75,5 +77,7 @@ class FirebaseDeploy(Pipe):
 
 
 if __name__ == '__main__':
-    pipe = FirebaseDeploy(schema=schema)
+    with open('/usr/bin/pipe.yml', 'r') as metadata_file:
+        metadata = yaml.safe_load(metadata_file.read())
+    pipe = FirebaseDeploy(pipe_metadata=metadata, schema=schema, check_for_newer_version=True)
     pipe.run()
