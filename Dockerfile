@@ -12,5 +12,6 @@ WORKDIR /usr/bin
 RUN pip install -r requirements.txt
 
 COPY pipe /usr/bin/
+COPY LICENSE.txt pipe.yml README.md /usr/bin/
 
 ENTRYPOINT ["python3", "/usr/bin/main.py"]
