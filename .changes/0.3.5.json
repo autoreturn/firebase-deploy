@@ -1,0 +1,6 @@
+[
+  {
+    "description": "Add warning message about new version of the pipe available.",
+    "type": "patch"
+  }
+]

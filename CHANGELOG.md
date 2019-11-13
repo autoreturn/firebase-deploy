@@ -1,6 +1,10 @@
 # Changelog
 Note: version releases in the 0.x.y range may introduce breaking changes.
 
+## 0.3.5
+
+- patch: Add warning message about new version of the pipe available.
+
 ## 0.3.4
 
 - patch: Updated pipes toolkit version to fix coloring of log info messages.
