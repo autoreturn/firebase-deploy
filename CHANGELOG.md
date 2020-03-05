@@ -1,6 +1,11 @@
 # Changelog
 Note: version releases in the 0.x.y range may introduce breaking changes.
 
+## 0.3.7
+
+- patch: Internal maintenance: Upgrade dependency version bitbucket-pipes-toolkit.
+- patch: Update the Readme with a new Atlassian Community link.
+
 ## 0.3.6
 
 - patch: Internal maintenance: Add hadolint linter for Dockerfile

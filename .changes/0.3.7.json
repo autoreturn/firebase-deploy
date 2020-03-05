@@ -1,0 +1,10 @@
+[
+  {
+    "description": "Update the Readme with a new Atlassian Community link.",
+    "type": "patch"
+  },
+  {
+    "description": "Internal maintenance: Upgrade dependency version bitbucket-pipes-toolkit.",
+    "type": "patch"
+  }
+]
