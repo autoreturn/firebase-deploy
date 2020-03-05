@@ -63,7 +63,7 @@ script:
 ```
 
 ## Support
-If you’d like help with this pipe, or you have an issue or feature request, [let us know on Community](https://community.atlassian.com/t5/forums/postpage/choose-node/true/interaction-style/qanda?add-tags=bitbucket-pipelines,pipes,deployment,firebase).
+If you’d like help with this pipe, or you have an issue or feature request, [let us know on Community][community].
 
 If you’re reporting an issue, please include:
 
@@ -71,6 +71,10 @@ If you’re reporting an issue, please include:
 - relevant logs and error messages
 - steps to reproduce
 
+
 ## License
 Copyright (c) 2018 Atlassian and others.
 Apache 2.0 licensed, see [LICENSE.txt](LICENSE.txt) file.
+
+
+[community]: https://community.atlassian.com/t5/forums/postpage/board-id/bitbucket-pipelines-questions?add-tags=pipes,google,deployment,firebase
