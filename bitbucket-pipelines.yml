@@ -41,7 +41,7 @@ test: &test
         image: python:3.7
         script:
         - pip install -r test/requirements.txt
-        - pytest test/test.py --junitxml=test-reports/report.xml
+        - pytest test/test.py --verbose --capture=no
         - flake8 --ignore E501,E125
         services:
         - docker

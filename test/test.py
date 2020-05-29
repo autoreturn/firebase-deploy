@@ -18,7 +18,7 @@ index_template = """
 """
 
 now = None
-public_project_url = 'https://pipes-ci.firebaseapp.com/'
+public_project_url = f"https://{os.getenv('FIREBASE_TEST_PROJECT_NAME')}.firebaseapp.com/"
 
 
 def setup():
