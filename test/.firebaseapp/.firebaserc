@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "pipes-ci",
-    "production": "pipes-prod"
+    "default": "bbci-pipes-test-infra",
+    "production": "bbci-pipes-test-infra"
   }
 }
