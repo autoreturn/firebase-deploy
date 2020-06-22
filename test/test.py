@@ -1,5 +1,6 @@
 import os
 import datetime
+import json
 
 import requests
 
@@ -18,7 +19,7 @@ index_template = """
 """
 
 now = None
-public_project_url = 'https://pipes-ci.firebaseapp.com/'
+public_project_url = 'https://bbci-pipes-test-infra.firebaseapp.com/'
 
 
 def setup():
@@ -27,6 +28,13 @@ def setup():
         global now
         now = datetime.datetime.now().isoformat()
         index.write(index_template.format(dt=now))
+
+    project = os.getenv('FIREBASE_TEST_PROJECT_NAME', 'bbci-pipes-test-infra')
+    firebase_rc = {'projects': {'default': project, 'production': project}}
+
+    firebase_rc_path = os.path.join(os.path.dirname(__file__), '.firebaseapp/.firebaserc')
+    with open(firebase_rc_path, 'w') as f:
+        json.dump(firebase_rc, f)
 
 
 class FirebaseDeployTestCase(PipeTestCase):
