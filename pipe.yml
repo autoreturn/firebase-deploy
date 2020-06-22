@@ -1,5 +1,5 @@
 name: Firebase deploy
-image: bitbucketpipelines/firebase-deploy:0.3.8
+image: bitbucketpipelines/firebase-deploy:0.3.9
 description: Deploy your code to Firebase using this pipe.
 category: Deployment
 repository: https://bitbucket.org/atlassian/firebase-deploy
