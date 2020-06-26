@@ -1,7 +1,6 @@
-import os
 import datetime
 import json
-
+import os
 import requests
 
 from bitbucket_pipes_toolkit.test import PipeTestCase
@@ -52,22 +51,21 @@ class FirebaseDeployTestCase(PipeTestCase):
     def test_no_parameters(self):
         result = self.run_container()
 
-        self.assertRegex(result, 'FIREBASE_TOKEN:\n- required field')
+        self.assertRegex(result, 'KEY_FILE or FIREBASE_TOKEN variables should be defined')
 
     def test_project_deployed_successfully(self):
         result = self.run_container(environment={
-            'FIREBASE_TOKEN': os.getenv("FIREBASE_TOKEN")
+            'KEY_FILE': os.getenv('KEY_FILE')
         })
 
         self.assertRegex(result, 'Successfully deployed project')
-
         response = requests.get(public_project_url)
 
         self.assertIn(now, response.text)
 
     def test_success_with_project_id(self):
         result = self.run_container(environment={
-            'FIREBASE_TOKEN': os.getenv("FIREBASE_TOKEN"),
+            'KEY_FILE': os.getenv('KEY_FILE'),
             'PROJECT': 'pipes-prod'
         })
 
@@ -75,7 +73,7 @@ class FirebaseDeployTestCase(PipeTestCase):
 
     def test_success_extra_args(self):
         result = self.run_container(environment={
-            'FIREBASE_TOKEN': os.getenv("FIREBASE_TOKEN"),
+            'KEY_FILE': os.getenv('KEY_FILE'),
             'EXTRA_ARGS': '--only hosting'
         })
 
@@ -83,7 +81,7 @@ class FirebaseDeployTestCase(PipeTestCase):
 
     def test_success_debug(self):
         result = self.run_container(environment={
-            'FIREBASE_TOKEN': os.getenv("FIREBASE_TOKEN"),
+            'KEY_FILE': os.getenv('KEY_FILE'),
             'DEBUG': 'true'
         })
 
@@ -91,7 +89,7 @@ class FirebaseDeployTestCase(PipeTestCase):
 
     def test_subprocess_streams_output(self):
         result = self.run_container(environment={
-            'FIREBASE_TOKEN': os.getenv("FIREBASE_TOKEN"),
+            'KEY_FILE': os.getenv('KEY_FILE'),
             'EXTRA_ARGS': '--only hosting'
         })
 
@@ -101,9 +99,18 @@ class FirebaseDeployTestCase(PipeTestCase):
 
     def test_deploy_failed(self):
         result = self.run_container(environment={
-            'FIREBASE_TOKEN': os.getenv("FIREBASE_TOKEN"),
+            'KEY_FILE': os.getenv('KEY_FILE'),
             'EXTRA_ARGS': '--only hosting:target-name-not-exist'
         })
-
         self.assertIn('Deployment failed', result)
         self.assertIn('Error:', result)
+
+    def test_deploy_failed_not_valid_firebase_token(self):
+        result = self.run_container(environment={
+            'FIREBASE_TOKEN': os.getenv("FIREBASE_TOKEN"),
+        })
+        self.assertIn('DeprecationWarning: FIREBASE_TOKEN is deprecated due to its legacy. '
+                      'For better auth use google service account KEY_FILE', result)
+        self.assertIn('HTTP Error: 401, Request had invalid authentication credentials. Expected OAuth 2 access token',
+                      result)
+        self.assertIn('Deployment failed', result)
