@@ -1,4 +1,0 @@
-{
-  "type": "minor",
-  "description": "Add google service account key authentication method as KEY_FILE env variable."
-}
