@@ -1,9 +1,14 @@
 name: Firebase deploy
-image: bitbucketpipelines/firebase-deploy:0.3.8
-description: Deploy your code to Firebase using this pipe
+image: bitbucketpipelines/firebase-deploy:0.4.0
+description: Deploy your code to Firebase using this pipe.
+category: Deployment
 repository: https://bitbucket.org/atlassian/firebase-deploy
-maintainer: bitbucketci-team@atlassian.com
-icon: https://bitbucket.org/atlassian/firebase-deploy/raw/master/logo.svg
+vendor:
+  name: Google
+  website: https://www.google.com/
+maintainer:
+  name: Atlassian
+  website: https://www.atlassian.com/
 tags:
     - deployment
     - firebase

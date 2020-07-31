@@ -1,6 +1,14 @@
 # Changelog
 Note: version releases in the 0.x.y range may introduce breaking changes.
 
+## 0.4.0
+
+- minor: Add google service account key authentication method as KEY_FILE env variable.
+
+## 0.3.9
+
+- patch: Internal maintenance: change pipe metadata according to new structure
+
 ## 0.3.8
 
 - patch: Internal maintenance: Add gitignore secrets.

@@ -7,7 +7,7 @@ Deploy your code to [Firebase](https://firebase.google.com/).
 Add the following snippet to the script section of your `bitbucket-pipelines.yml` file:
 
 ```yaml
-- pipe: atlassian/firebase-deploy:0.3.8
+- pipe: atlassian/firebase-deploy:0.4.0
   variables:
     FIREBASE_TOKEN: '<string>'
     # PROJECT_ID: '<string>' # Optional.
@@ -19,7 +19,8 @@ Add the following snippet to the script section of your `bitbucket-pipelines.yml
 
 | Variable              | Usage                                                       |
 | --------------------- | ----------------------------------------------------------- |
-| FIREBASE_TOKEN (*)    | Firebase API key |
+| KEY_FILE              | base64 encoded content of Key file for a [Google service account](https://cloud.google.com/iam/docs/creating-managing-service-account-keys). To encode this content, follow [encode private key doc][encode-string-to-base64].|
+| FIREBASE_TOKEN        | Firebase API key. Deprecated: recommended to use KEY_FILE variable|
 | PROJECT_ID            | Firebase project ID. Default: `default` (the pipe will use **.firebaserc** file to get the default project id.   |
 | MESSAGE               | Deployment message. Default: `Deploy ${BITBUCKET_COMMIT} from https://bitbucket.org/${BITBUCKET_WORKSPACE}/${BITBUCKET_REPO_SLUG}` |
 | EXTRA_ARGS            | Extra arguments to be passed to the Firebase CLI (see Firebase docs for more details). Default: `'`.
@@ -44,16 +45,40 @@ Basic example:
 
 ```yaml
 script:
-  - pipe: atlassian/firebase-deploy:0.3.8
+  - pipe: atlassian/firebase-deploy:0.4.0
     variables:
-      FIREBASE_TOKEN: $FIREBASE_TOKEN
+      KEY_FILE: $KEY_FILE
 ```
 
 Advanced example:
 
+Specify additional parameters in the following manner. This can be used, for instance, to explicitly point to project to be deployed.
+
 ```yaml
 script:
-  - pipe: atlassian/firebase-deploy:0.3.8
+  - pipe: atlassian/firebase-deploy:0.4.0
+    variables:
+      KEY_FILE: $KEY_FILE
+      PROJECT_ID: 'myAwesomeProject'
+      MESSAGE: 'Deploying myAwesomeProject'
+      EXTRA_ARGS: '--only functions'
+      DEBUG: 'true'
+```
+
+
+If you still use legacy FIREBASE_TOKEN approach, we saved this approach to be backward compatible. You can specify parameters in following manners:
+
+```yaml
+script:
+  - pipe: atlassian/firebase-deploy:0.4.0
+    variables:
+      FIREBASE_TOKEN: $FIREBASE_TOKEN
+```
+
+
+```yaml
+script:
+  - pipe: atlassian/firebase-deploy:0.4.0
     variables:
       FIREBASE_TOKEN: $FIREBASE_TOKEN
       PROJECT_ID: 'myAwesomeProject'
