@@ -112,6 +112,4 @@ class FirebaseDeployTestCase(PipeTestCase):
         })
         self.assertIn('DeprecationWarning: FIREBASE_TOKEN is deprecated due to its legacy. '
                       'For better auth use google service account KEY_FILE', result)
-        self.assertIn('HTTP Error: 401, Request had invalid authentication credentials. Expected OAuth 2 access token',
-                      result)
         self.assertIn('Deployment failed', result)
