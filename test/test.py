@@ -18,7 +18,8 @@ index_template = """
 """
 
 now = None
-public_project_url = 'https://bbci-pipes-test-infra.firebaseapp.com/'
+
+public_project_url = f"https://{os.getenv('FIREBASE_TEST_PROJECT_NAME')}.firebaseapp.com/"
 
 
 def setup():
@@ -111,6 +112,4 @@ class FirebaseDeployTestCase(PipeTestCase):
         })
         self.assertIn('DeprecationWarning: FIREBASE_TOKEN is deprecated due to its legacy. '
                       'For better auth use google service account KEY_FILE', result)
-        self.assertIn('HTTP Error: 401, Request had invalid authentication credentials. Expected OAuth 2 access token',
-                      result)
         self.assertIn('Deployment failed', result)

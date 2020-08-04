@@ -11,7 +11,7 @@ RUN apt-get update \
     && curl -sL https://deb.nodesource.com/setup_11.x | bash - \
     && apt-get install --no-install-recommends  -y \
      nodejs=11.15.0-1nodesource1 \
-    && npm install -g firebase-tools@7.8.1 \
+    && npm install -g firebase-tools@8.4.1 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
