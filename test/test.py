@@ -2,6 +2,7 @@ import datetime
 import json
 import os
 import requests
+from unittest import mock
 
 from bitbucket_pipes_toolkit.test import PipeTestCase
 
@@ -106,6 +107,7 @@ class FirebaseDeployTestCase(PipeTestCase):
         self.assertIn('Deployment failed', result)
         self.assertIn('Error:', result)
 
+    @mock.patch.dict(os.environ, {'FIREBASE_TOKEN': 'testtoken'})
     def test_deploy_failed_not_valid_firebase_token(self):
         result = self.run_container(environment={
             'FIREBASE_TOKEN': os.getenv("FIREBASE_TOKEN"),
