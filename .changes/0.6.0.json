@@ -1,0 +1,6 @@
+[
+  {
+    "description": "Internal maintenance: bump dependency bitbucket-pipes-toolkit. Use ssh push back approach.",
+    "type": "minor"
+  }
+]

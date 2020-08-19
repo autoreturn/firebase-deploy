@@ -1,6 +1,10 @@
 # Changelog
 Note: version releases in the 0.x.y range may introduce breaking changes.
 
+## 0.6.0
+
+- minor: Internal maintenance: bump dependency bitbucket-pipes-toolkit. Use ssh push back approach.
+
 ## 0.5.0
 
 - minor: Update firebase-tools to version 8.4.1.
