@@ -9,6 +9,7 @@ Add the following snippet to the script section of your `bitbucket-pipelines.yml
 ```yaml
 - pipe: atlassian/firebase-deploy:0.6.0
   variables:
+    KEY_FILE: '<string>'
     FIREBASE_TOKEN: '<string>'
     # PROJECT_ID: '<string>' # Optional.
     # MESSAGE: '<string>' # Optional.
@@ -31,6 +32,12 @@ _(*) = required variable._
 ## Details
 This pipe deploys code and assets from your project directory to your Firebase project. 
 For Firebase Hosting, a firebase.json configuration file is required.
+
+NodeJS environment:
+For NodeJS environment pipe uses version 12 LTS by default. Supported LTS and 8 versions.
+The version provided for the `engines` field of the `package.json` file in your `functions/` directory will be used as NodeJS version inside pipe's docker container.
+** Note! You must provide the same NodeJS version for an image in your `bitbucket-pipelines.yml` file as in your `package.json` file. **
+
 
 ## Prerequisites
 
@@ -64,7 +71,6 @@ script:
       EXTRA_ARGS: '--only functions'
       DEBUG: 'true'
 ```
-
 
 If you still use legacy FIREBASE_TOKEN approach, we saved this approach to be backward compatible. You can specify parameters in following manners:
 
