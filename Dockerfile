@@ -8,18 +8,20 @@ RUN apt-get update \
     && apt-get install --no-install-recommends -y \
      curl=7.64.0-4+deb10u1 \
      gnupg2=2.2.12-1+deb10u1 \
-    && curl -sL https://deb.nodesource.com/setup_11.x | bash - \
+    && curl -sL https://deb.nodesource.com/setup_12.x | bash - \
     && apt-get install --no-install-recommends  -y \
-     nodejs=11.15.0-1nodesource1 \
-    && npm install -g firebase-tools@8.4.1 \
+     nodejs=12.19.0-1nodesource1 \
+    && npm install -g n@6.7.0 && n 8 && n 10 && n 12 \
+    && npm install -g firebase-tools@8.14.1 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt /usr/bin
-WORKDIR /usr/bin
+WORKDIR /
+
+COPY requirements.txt /
 RUN pip install -r requirements.txt
 
-COPY pipe /usr/bin/
-COPY LICENSE.txt pipe.yml README.md /usr/bin/
+COPY pipe /
+COPY LICENSE.txt pipe.yml README.md /
 
-ENTRYPOINT ["python3", "/usr/bin/main.py"]
+ENTRYPOINT ["python3", "/main.py"]

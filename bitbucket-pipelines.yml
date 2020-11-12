@@ -2,31 +2,16 @@ image:
   name: atlassian/default-image:2
 
 
-release-canary: &release-canary
-  step:
-    name: Release canary version
-    image: python:3.7
-    script:
-      - set -ex
-      - pip install semversioner
-      - VERSION=$(semversioner current-version)
-      - IMAGE=bitbucketpipelines/$BITBUCKET_REPO_SLUG
-      - echo ${DOCKERHUB_PASSWORD} | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
-      - docker build -t ${IMAGE} .
-      - docker tag ${IMAGE} ${IMAGE}:${VERSION}.${BITBUCKET_BUILD_NUMBER}-canary
-      - docker push ${IMAGE}:${VERSION}.${BITBUCKET_BUILD_NUMBER}-canary
-    services:
-      - docker
-
 release-dev: &release-dev
   step:
     name: Release development version
     trigger: manual
     image: python:3.7
+    size: 2x
     script:
       - pip install semversioner
       - VERSION=$(semversioner current-version).${BITBUCKET_BUILD_NUMBER}-dev
-      - pipe: docker://bitbucketpipelines/bitbucket-pipe-release:3.2.1
+      - pipe: docker://bitbucketpipelines/bitbucket-pipe-release:3.2.2
         variables:
           DOCKERHUB_USERNAME: $DOCKERHUB_USERNAME
           DOCKERHUB_PASSWORD: $DOCKERHUB_PASSWORD
@@ -41,6 +26,7 @@ test: &test
     - step:
         name: Test
         image: python:3.7
+        size: 2x
         script:
         - pip install -r test/requirements.txt
         - pytest test/test.py --verbose --capture=no
@@ -56,9 +42,10 @@ test: &test
 push: &push
   step:
     name: Push and Tag
-    image: python:3.6.7
+    image: python:3.7
+    size: 2x
     script:
-    - pipe: docker://bitbucketpipelines/bitbucket-pipe-release:3.2.1
+    - pipe: docker://bitbucketpipelines/bitbucket-pipe-release:3.2.2
       variables:
         DOCKERHUB_USERNAME: $DOCKERHUB_USERNAME
         DOCKERHUB_PASSWORD: $DOCKERHUB_PASSWORD

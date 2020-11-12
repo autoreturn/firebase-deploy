@@ -1,12 +1,13 @@
-import base64
-import json
 import os
-import subprocess
 import sys
-import yaml
+import json
+import base64
 import warnings
+import subprocess
 
-from bitbucket_pipes_toolkit import Pipe, get_variable, get_logger
+import yaml
+
+from bitbucket_pipes_toolkit import Pipe, get_variable
 
 
 schema = {
@@ -19,7 +20,8 @@ schema = {
 }
 
 
-logger = get_logger()
+DEFAULT_NODE_JS_VERSION = 12
+DEFAULT_FUNCTIONS_DIR_PATH = "./functions"
 
 
 class FirebaseDeploy(Pipe):
@@ -27,7 +29,7 @@ class FirebaseDeploy(Pipe):
     def run(self):
         super().run()
 
-        logger.info('Executing the pipe...')
+        self.log_info('Executing the pipe...')
         project = self.get_variable('PROJECT_ID')
         token = self.get_variable('FIREBASE_TOKEN')
         key_file = self.get_variable('KEY_FILE')
@@ -48,6 +50,46 @@ class FirebaseDeploy(Pipe):
             warnings.warn("FIREBASE_TOKEN is deprecated due to its legacy. "
                           "For better auth use google service account KEY_FILE", DeprecationWarning)
 
+        nodejs_version = DEFAULT_NODE_JS_VERSION
+        # try to find nodejs version, if not - use Default
+        # check for alternative path to functions directory
+        try:
+            with open('firebase.json', 'r') as f:
+                data = json.load(f)
+                functions_dir_path = data["functions"]["source"]
+        except FileNotFoundError:
+            pass
+        except KeyError:
+            pass
+
+        functions_dir_path = DEFAULT_FUNCTIONS_DIR_PATH
+
+        if os.path.isdir(functions_dir_path):
+            self.log_info(message=f'Found directory for functions: {functions_dir_path}')
+            try:
+                with open(f'{functions_dir_path}/package.json', 'r') as f:
+                    data = json.load(f)
+                    nodejs_version = data["engines"]["node"]
+            except FileNotFoundError:
+                self.log_warning(message=f'The {functions_dir_path}/package.json file is missing.')
+            except json.decoder.JSONDecodeError:
+                self.log_warning(message=f'The {functions_dir_path}/package.json file is broken.')
+            except KeyError:
+                self.log_warning(message='Was not able to find NodeJS version in the functions/package.json.')
+
+        if nodejs_version:
+            self.log_info(message="Current NodeJS version:")
+            n_result = subprocess.run(['n', str(nodejs_version)],
+                                      check=False,
+                                      text=True,
+                                      encoding='utf-8',
+                                      stdout=sys.stdout,
+                                      stderr=sys.stderr)
+
+            if n_result.returncode != 0:
+                self.log_info(f'{n_result.stderr}')
+                self.fail(message=f'Trying to use {nodejs_version} Node JS version failed.')
+
         if message is None:
             message = get_variable('MESSAGE', default=f'Deploy {commit} from https://bitbucket.org/{workspace}/{repo}')
 
@@ -65,7 +107,7 @@ class FirebaseDeploy(Pipe):
 
         if project is None:
             # get the project id from .firebaserc
-            logger.info('Project id not specified, trying to fectch it from .firebaserc')
+            self.log_info('Project id not specified, trying to fectch it from .firebaserc')
             try:
                 data = json.load(open('.firebaserc'))
                 project = data['projects']['default']
@@ -79,7 +121,7 @@ class FirebaseDeploy(Pipe):
 
         args.extend(extra_args.split())
 
-        logger.info('Starting deployment of the project to Firebase.')
+        self.log_info('Starting deployment of the project to Firebase.')
 
         result = subprocess.run(args,
                                 check=False,
@@ -96,7 +138,7 @@ class FirebaseDeploy(Pipe):
 
 
 if __name__ == '__main__':
-    with open('/usr/bin/pipe.yml', 'r') as metadata_file:
+    with open('/pipe.yml', 'r') as metadata_file:
         metadata = yaml.safe_load(metadata_file.read())
     pipe = FirebaseDeploy(pipe_metadata=metadata, schema=schema, check_for_newer_version=True)
     pipe.run()
