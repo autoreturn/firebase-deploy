@@ -1,0 +1,14 @@
+[
+  {
+    "description": "Update NodeJS version to 12 lts in the Docker image.",
+    "type": "minor"
+  },
+  {
+    "description": "Update firebase-tools version to the 8.14.1.",
+    "type": "minor"
+  },
+  {
+    "description": "Add support for flexible NodeJS LTS verions.",
+    "type": "minor"
+  }
+]

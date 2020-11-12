@@ -1,4 +1,0 @@
-{
-  "type": "minor",
-  "description": "Update NodeJS version to 12 lts in the Docker image."
-}

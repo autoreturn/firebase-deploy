@@ -1,6 +1,12 @@
 # Changelog
 Note: version releases in the 0.x.y range may introduce breaking changes.
 
+## 0.7.0
+
+- minor: Add support for flexible NodeJS LTS verions.
+- minor: Update NodeJS version to 12 lts in the Docker image.
+- minor: Update firebase-tools version to the 8.14.1.
+
 ## 0.6.0
 
 - minor: Internal maintenance: bump dependency bitbucket-pipes-toolkit. Use ssh push back approach.
