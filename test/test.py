@@ -1,7 +1,10 @@
 import datetime
 import json
 import os
+
+import pytest
 import requests
+import shutil
 from unittest import mock
 
 from bitbucket_pipes_toolkit.test import PipeTestCase
@@ -115,3 +118,33 @@ class FirebaseDeployTestCase(PipeTestCase):
         self.assertIn('DeprecationWarning: FIREBASE_TOKEN is deprecated due to its legacy. '
                       'For better auth use google service account KEY_FILE', result)
         self.assertIn('Deployment failed', result)
+
+    @pytest.mark.run(order=-1)
+    def test_deploy_multi_target(self):
+        shutil.copyfile('firebase.json', '/tmp/firebase.json')
+        shutil.copyfile('firebase-multi-site.json', 'firebase.json')
+
+        multi_sites = '''
+        [
+            {"TARGET": "blog-bbci-pipes-test-infra", "RESOURCE": "blog-bbci-pipes-test-infra"}
+        ]
+        '''
+        result = self.run_container(environment={
+            'KEY_FILE': os.getenv('KEY_FILE'),
+            'EXTRA_ARGS': '--only hosting:blog-bbci-pipes-test-infra',
+            'MULTI_SITES_CONFIG': multi_sites
+        })
+        self.assertRegex(result, 'Successfully deployed project')
+
+        result = self.run_container(environment={
+            'KEY_FILE': os.getenv('KEY_FILE'),
+            'MULTI_SITES_CONFIG': '''
+                [
+                    {"TARGET": "blog-bbci-pipes-test-infra", "RESOURCE": "blog-bbci-pipes-test-infra"},
+                    {"TARGET": "bbci-pipes-test-infra", "RESOURCE": "bbci-pipes-test-infra"}
+                ]
+        '''
+        })
+        self.assertRegex(result, 'Successfully deployed project')
+
+        shutil.copyfile('/tmp/firebase.json', 'firebase.json')

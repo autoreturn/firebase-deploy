@@ -14,6 +14,7 @@ Add the following snippet to the script section of your `bitbucket-pipelines.yml
     # PROJECT_ID: '<string>' # Optional.
     # MESSAGE: '<string>' # Optional.
     # EXTRA_ARGS: '<string>' # Optional.
+    # MULTI_SITES_CONFIG: '<json>' # Optional
     # DEBUG: '<boolean>' # Optional.
 ```
 ## Variables
@@ -25,6 +26,7 @@ Add the following snippet to the script section of your `bitbucket-pipelines.yml
 | PROJECT_ID            | Firebase project ID. Default: `default` (the pipe will use **.firebaserc** file to get the default project id.   |
 | MESSAGE               | Deployment message. Default: `Deploy ${BITBUCKET_COMMIT} from https://bitbucket.org/${BITBUCKET_WORKSPACE}/${BITBUCKET_REPO_SLUG}` |
 | EXTRA_ARGS            | Extra arguments to be passed to the Firebase CLI (see Firebase docs for more details). Default: `'`.
+| MULTI_SITES_CONFIG    | JSON document: list of dictionaries containing mapping TARGET to RESOURCE(s). Provide targets defined in your firebase.json. See how to configure firebase.json in [firebase doc](https://firebase.google.com/docs/cli/targets#configure_firebasejson_to_use_deploy_targets)|
 | DEBUG                 | Turn on extra debug information. Default: `false`. |
 
 _(*) = required variable._
@@ -48,7 +50,7 @@ You are going to need to install the Firebase CLI and generate an authentication
 
 ## Examples
 
-Basic example:
+### Basic example:
 
 ```yaml
 script:
@@ -57,7 +59,7 @@ script:
       KEY_FILE: $KEY_FILE
 ```
 
-Advanced example:
+### Advanced example:
 
 Specify additional parameters in the following manner. This can be used, for instance, to explicitly point to project to be deployed.
 
@@ -92,6 +94,70 @@ script:
       EXTRA_ARGS: '--only functions'
       DEBUG: 'true'
 ```
+
+If you have multiple targets to deploy, you have to specify appropriate targets in firebase.json and then use the pipe in following ways:
+
+- Deploying multiple sites at once
+
+```yaml
+script:
+  - pipe: atlassian/firebase-deploy:0.7.0
+    variables:
+      FIREBASE_TOKEN: $FIREBASE_TOKEN
+      PROJECT_ID: 'myAwesomeProject'
+      MESSAGE: 'Deploying myAwesomeProject'
+      EXTRA_ARGS: '--only functions'
+      MULTI_SITES_CONFIG: >
+          [{
+            "TARGET": "my-application-target",
+            "RESOURCE": "my-appropriate-resource"
+          },
+          {
+            "TARGET": "my-app-blog-target",
+            "RESOURCE": "resource1.blog.com resource2.blog.com"
+          }]
+      DEBUG: 'true'
+```
+
+- Deploying multiple sites at parallel steps:
+
+```yaml
+- parallel:
+  - step:
+    script:
+      - pipe: atlassian/firebase-deploy:0.7.0
+        variables:
+          FIREBASE_TOKEN: $FIREBASE_TOKEN
+          PROJECT_ID: 'myAwesomeProject'
+          MESSAGE: 'Deploying myAwesomeProject'
+          EXTRA_ARGS: '--only functions'
+          MULTI_SITES_CONFIG: >
+              [{
+                "TARGET": "my-application-target1",
+                "RESOURCE": "my-appropriate-resource"
+              }]
+          DEBUG: 'true'
+  - step:
+    script:
+      - pipe: atlassian/firebase-deploy:0.7.0
+        variables:
+          FIREBASE_TOKEN: $FIREBASE_TOKEN
+          PROJECT_ID: 'myAwesomeProject'
+          MESSAGE: 'Deploying myAwesomeProject'
+          EXTRA_ARGS: '--only functions'
+          MULTI_SITES_CONFIG: >
+              [{
+                "TARGET": "my-app-blog-target",
+                "RESOURCE": "resource1.blog.com resource2.blog.com"
+              }]
+          DEBUG: 'true'
+```
+
+- Deploying just one specific site.
+ 
+For easier use we recommend to deploy one site at a step to have better deploy workflow.
+
+For more information about multiple targets see [Firebase Deploy Targets](https://firebase.google.com/docs/cli/targets).
 
 ## Support
 If you’d like help with this pipe, or you have an issue or feature request, [let us know on Community][community].

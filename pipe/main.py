@@ -16,6 +16,16 @@ schema = {
     'PROJECT_ID': {'required': False, 'type': 'string', 'nullable': True, 'default': None},
     'MESSAGE': {'type': 'string', 'required': False, 'nullable': True, 'default': None},
     'EXTRA_ARGS': {'type': 'string', 'required': False, 'default': ''},
+    'MULTI_SITES_CONFIG': {
+        'empty': False,
+        'required': False,
+        'schema': {
+            'type': 'dict',
+            'schema': {
+                'TARGET': {'type': 'string', 'required': True},
+                'RESOURCE': {'type': 'string', 'required': True}
+            }
+        }},
     'DEBUG': {'type': 'boolean', 'required': False, 'default': False}
 }
 
@@ -115,6 +125,22 @@ class FirebaseDeploy(Pipe):
                 self.fail(message='.firebaserc file is missing and is required')
             except KeyError:
                 self.fail(message='Was not able to find project ID in .firebaserc. Check your configuration.')
+
+        if self.get_variable('MULTI_SITES_CONFIG'):
+            # MULTI_SITES = [{'TARGET': 'target name', 'RESOURCE': 'appropriate resource name'}]
+            multi_sites = list(self.get_variable('MULTI_SITES_CONFIG'))
+            for site in multi_sites:
+                target = site['TARGET']
+                resource = site['RESOURCE']
+                result = subprocess.run(f'firebase target:apply hosting {target} {resource} '
+                                        f'--project {project}'.split(),
+                                        check=False,
+                                        text=True,
+                                        encoding='utf-8',
+                                        stdout=sys.stdout,
+                                        stderr=sys.stderr)
+                if result.returncode != 0:
+                    self.fail(f'Command target:apply for MULTI_SITES target failed. Error: {sys.stderr}')
 
         args.extend(['--project', project])
         args.extend(['deploy', '--message', message])
