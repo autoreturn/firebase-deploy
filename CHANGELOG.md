@@ -1,6 +1,10 @@
 # Changelog
 Note: version releases in the 0.x.y range may introduce breaking changes.
 
+## 0.8.0
+
+- minor: Added support for multi-site deploying.
+
 ## 0.7.0
 
 - minor: Add support for flexible NodeJS LTS verions.

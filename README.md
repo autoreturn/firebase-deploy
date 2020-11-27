@@ -7,7 +7,7 @@ Deploy your code to [Firebase](https://firebase.google.com/).
 Add the following snippet to the script section of your `bitbucket-pipelines.yml` file:
 
 ```yaml
-- pipe: atlassian/firebase-deploy:0.7.0
+- pipe: atlassian/firebase-deploy:0.8.0
   variables:
     KEY_FILE: '<string>'
     FIREBASE_TOKEN: '<string>'
@@ -54,7 +54,7 @@ You are going to need to install the Firebase CLI and generate an authentication
 
 ```yaml
 script:
-  - pipe: atlassian/firebase-deploy:0.7.0
+  - pipe: atlassian/firebase-deploy:0.8.0
     variables:
       KEY_FILE: $KEY_FILE
 ```
@@ -65,7 +65,7 @@ Specify additional parameters in the following manner. This can be used, for ins
 
 ```yaml
 script:
-  - pipe: atlassian/firebase-deploy:0.7.0
+  - pipe: atlassian/firebase-deploy:0.8.0
     variables:
       KEY_FILE: $KEY_FILE
       PROJECT_ID: 'myAwesomeProject'
@@ -78,7 +78,7 @@ If you still use legacy FIREBASE_TOKEN approach, we saved this approach to be ba
 
 ```yaml
 script:
-  - pipe: atlassian/firebase-deploy:0.7.0
+  - pipe: atlassian/firebase-deploy:0.8.0
     variables:
       FIREBASE_TOKEN: $FIREBASE_TOKEN
 ```
@@ -86,7 +86,7 @@ script:
 
 ```yaml
 script:
-  - pipe: atlassian/firebase-deploy:0.7.0
+  - pipe: atlassian/firebase-deploy:0.8.0
     variables:
       FIREBASE_TOKEN: $FIREBASE_TOKEN
       PROJECT_ID: 'myAwesomeProject'
@@ -101,7 +101,7 @@ If you have multiple targets to deploy, you have to specify appropriate targets 
 
 ```yaml
 script:
-  - pipe: atlassian/firebase-deploy:0.7.0
+  - pipe: atlassian/firebase-deploy:0.8.0
     variables:
       FIREBASE_TOKEN: $FIREBASE_TOKEN
       PROJECT_ID: 'myAwesomeProject'
@@ -125,7 +125,7 @@ script:
 - parallel:
   - step:
     script:
-      - pipe: atlassian/firebase-deploy:0.7.0
+      - pipe: atlassian/firebase-deploy:0.8.0
         variables:
           FIREBASE_TOKEN: $FIREBASE_TOKEN
           PROJECT_ID: 'myAwesomeProject'
@@ -139,7 +139,7 @@ script:
           DEBUG: 'true'
   - step:
     script:
-      - pipe: atlassian/firebase-deploy:0.7.0
+      - pipe: atlassian/firebase-deploy:0.8.0
         variables:
           FIREBASE_TOKEN: $FIREBASE_TOKEN
           PROJECT_ID: 'myAwesomeProject'

@@ -1,0 +1,6 @@
+[
+  {
+    "description": "Added support for multi-site deploying.",
+    "type": "minor"
+  }
+]
