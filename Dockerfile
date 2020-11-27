@@ -10,7 +10,7 @@ RUN apt-get update \
      gnupg2=2.2.12-1+deb10u1 \
     && curl -sL https://deb.nodesource.com/setup_12.x | bash - \
     && apt-get install --no-install-recommends  -y \
-     nodejs=12.19.0-1nodesource1 \
+     nodejs=12.20.0-1nodesource1 \
     && npm install -g n@6.7.0 && n 8 && n 10 && n 12 \
     && npm install -g firebase-tools@8.14.1 \
     && apt-get clean \
@@ -19,7 +19,7 @@ RUN apt-get update \
 WORKDIR /
 
 COPY requirements.txt /
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY pipe /
 COPY LICENSE.txt pipe.yml README.md /

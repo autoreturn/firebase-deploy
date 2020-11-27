@@ -1,0 +1,29 @@
+{
+  "hosting": [
+  {
+      "target": "blog-bbci-pipes-test-infra",
+      "public": "public",
+      "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  },
+  {
+      "target": "bbci-pipes-test-infra",
+      "public": "public",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ]
+  }
+],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+}
+
