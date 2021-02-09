@@ -1,7 +1,7 @@
 {
   "hosting": [
   {
-      "target": "blog-bbci-pipes-test-infra",
+      "target": "info-bbci-pipes-test-infra",
       "public": "public",
       "ignore": [
       "firebase.json",
