@@ -1,0 +1,10 @@
+[
+  {
+    "description": "Add support for NodeJS v14.",
+    "type": "minor"
+  },
+  {
+    "description": "Bump firebase-tools to version 9.4.0.",
+    "type": "major"
+  }
+]

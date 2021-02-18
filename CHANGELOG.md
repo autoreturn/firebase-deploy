@@ -1,6 +1,11 @@
 # Changelog
 Note: version releases in the 0.x.y range may introduce breaking changes.
 
+## 1.0.0
+
+- major: Bump firebase-tools to version 9.4.0.
+- minor: Add support for NodeJS v14.
+
 ## 0.8.0
 
 - minor: Added support for multi-site deploying.
