@@ -58,6 +58,7 @@ class FirebaseDeployTestCase(PipeTestCase):
 
         self.assertRegex(result, 'KEY_FILE or FIREBASE_TOKEN variables should be defined')
 
+    @pytest.mark.run(order=1)
     def test_project_deployed_successfully(self):
         result = self.run_container(environment={
             'KEY_FILE': os.getenv('KEY_FILE')
@@ -71,7 +72,7 @@ class FirebaseDeployTestCase(PipeTestCase):
     def test_success_with_project_id(self):
         result = self.run_container(environment={
             'KEY_FILE': os.getenv('KEY_FILE'),
-            'PROJECT': 'pipes-prod'
+            'PROJECT': os.getenv('FIREBASE_TEST_PROJECT_NAME')
         })
 
         self.assertRegex(result, 'Successfully deployed project')
@@ -126,12 +127,12 @@ class FirebaseDeployTestCase(PipeTestCase):
 
         multi_sites = '''
         [
-            {"TARGET": "blog-bbci-pipes-test-infra", "RESOURCE": "blog-bbci-pipes-test-infra"}
+            {"TARGET": "info-bbci-pipes-test-infra", "RESOURCE": "info-bbci-pipes-test-infra"}
         ]
         '''
         result = self.run_container(environment={
             'KEY_FILE': os.getenv('KEY_FILE'),
-            'EXTRA_ARGS': '--only hosting:blog-bbci-pipes-test-infra',
+            'EXTRA_ARGS': '--only hosting:info-bbci-pipes-test-infra',
             'MULTI_SITES_CONFIG': multi_sites
         })
         self.assertRegex(result, 'Successfully deployed project')
@@ -140,7 +141,7 @@ class FirebaseDeployTestCase(PipeTestCase):
             'KEY_FILE': os.getenv('KEY_FILE'),
             'MULTI_SITES_CONFIG': '''
                 [
-                    {"TARGET": "blog-bbci-pipes-test-infra", "RESOURCE": "blog-bbci-pipes-test-infra"},
+                    {"TARGET": "info-bbci-pipes-test-infra", "RESOURCE": "info-bbci-pipes-test-infra"},
                     {"TARGET": "bbci-pipes-test-infra", "RESOURCE": "bbci-pipes-test-infra"}
                 ]
         '''

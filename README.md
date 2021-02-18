@@ -17,16 +17,17 @@ Add the following snippet to the script section of your `bitbucket-pipelines.yml
     # MULTI_SITES_CONFIG: '<json>' # Optional
     # DEBUG: '<boolean>' # Optional.
 ```
+
 ## Variables
 
 | Variable              | Usage                                                       |
 | --------------------- | ----------------------------------------------------------- |
-| KEY_FILE              | base64 encoded content of Key file for a [Google service account](https://cloud.google.com/iam/docs/creating-managing-service-account-keys). To encode this content, follow [encode private key doc][encode-string-to-base64].|
+| KEY_FILE              | base64 encoded content of Key file for a [Google service account][Google service account]. To encode this content, follow [encode private key docs][encode private key docs].|
 | FIREBASE_TOKEN        | Firebase API key. Deprecated: recommended to use KEY_FILE variable|
 | PROJECT_ID            | Firebase project ID. Default: `default` (the pipe will use **.firebaserc** file to get the default project id.   |
 | MESSAGE               | Deployment message. Default: `Deploy ${BITBUCKET_COMMIT} from https://bitbucket.org/${BITBUCKET_WORKSPACE}/${BITBUCKET_REPO_SLUG}` |
 | EXTRA_ARGS            | Extra arguments to be passed to the Firebase CLI (see Firebase docs for more details). Default: `'`.
-| MULTI_SITES_CONFIG    | JSON document: list of dictionaries containing mapping TARGET to RESOURCE(s). Provide targets defined in your firebase.json. See how to configure firebase.json in [firebase doc](https://firebase.google.com/docs/cli/targets#configure_firebasejson_to_use_deploy_targets)|
+| MULTI_SITES_CONFIG    | JSON document: list of dictionaries containing mapping TARGET to RESOURCE(s). Provide targets defined in your firebase.json. See how to configure firebase.json in [firebase doc][firebase doc]|
 | DEBUG                 | Turn on extra debug information. Default: `false`. |
 
 _(*) = required variable._
@@ -36,8 +37,11 @@ This pipe deploys code and assets from your project directory to your Firebase p
 For Firebase Hosting, a firebase.json configuration file is required.
 
 NodeJS environment:
+
 For NodeJS environment pipe uses version 12 LTS by default. Supported LTS and 8 versions.
 The version provided for the `engines` field of the `package.json` file in your `functions/` directory will be used as NodeJS version inside pipe's docker container.
+
+
 ** Note! You must provide the same NodeJS version for an image in your `bitbucket-pipelines.yml` file as in your `package.json` file. **
 
 
@@ -45,8 +49,8 @@ The version provided for the `engines` field of the `package.json` file in your 
 
 You are going to need to install the Firebase CLI and generate an authentication token for use in non-interactive environments.
 
-* [Installing the Firebase CLI](https://firebase.google.com/docs/cli/#install_the_firebase_cli)
-* You'll need to use `login:ci` command to generate an authentication token. See the [command reference](https://firebase.google.com/docs/cli/#administrative_commands).
+* [Installing the Firebase CLI][Installing the Firebase CLI]
+* You'll need to use `login:ci` command to generate an authentication token. See the [command reference][command reference].
 
 ## Examples
 
@@ -157,7 +161,7 @@ script:
  
 For easier use we recommend to deploy one site at a step to have better deploy workflow.
 
-For more information about multiple targets see [Firebase Deploy Targets](https://firebase.google.com/docs/cli/targets).
+For more information about multiple targets see [Firebase Deploy Targets][Firebase Deploy Targets].
 
 ## Support
 If you’d like help with this pipe, or you have an issue or feature request, [let us know on Community][community].
@@ -175,3 +179,9 @@ Apache 2.0 licensed, see [LICENSE.txt](LICENSE.txt) file.
 
 
 [community]: https://community.atlassian.com/t5/forums/postpage/board-id/bitbucket-pipelines-questions?add-tags=pipes,google,deployment,firebase
+[Google service account]: https://cloud.google.com/iam/docs/creating-managing-service-account-keys
+[encode private key docs]: https://support.atlassian.com/bitbucket-cloud/docs/variables-and-secrets/#Use-multiple-SSH-keys-in-your-pipeline
+[firebase doc]: https://firebase.google.com/docs/cli/targets#configure_firebasejson_to_use_deploy_targets
+[Installing the Firebase CLI]: https://firebase.google.com/docs/cli/#install_the_firebase_cli
+[command reference]: https://firebase.google.com/docs/cli/#administrative_commands
+[Firebase Deploy Targets]: https://firebase.google.com/docs/cli/targets
