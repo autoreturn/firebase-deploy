@@ -1,6 +1,10 @@
 # Changelog
 Note: version releases in the 0.x.y range may introduce breaking changes.
 
+## 1.1.0
+
+- minor: Bump firebase-tools to version 9.10.0.
+
 ## 1.0.0
 
 - major: Bump firebase-tools to version 9.4.0.
