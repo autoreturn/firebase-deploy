@@ -6,13 +6,13 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
-     curl=7.64.0-4+deb10u1 \
-     gnupg2=2.2.12-1+deb10u1 \
+     curl=7.* \
+     gnupg2=2.* \
     && curl -sL https://deb.nodesource.com/setup_12.x | bash - \
     && apt-get install --no-install-recommends  -y \
-     nodejs=12.20.* \
+     nodejs=12.* \
     && npm install -g n@6.7.0 && n 14 && n 8 && n 10 && n 12 \
-    && npm install -g firebase-tools@9.4.0 \
+    && npm install -g firebase-tools@9.10.0 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
