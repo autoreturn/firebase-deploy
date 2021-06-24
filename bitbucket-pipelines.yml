@@ -5,13 +5,13 @@ image:
 release-dev: &release-dev
   step:
     name: Release development version
-    trigger: manual
     image: python:3.7
     size: 2x
+    trigger: manual
     script:
       - pip install semversioner
       - VERSION=$(semversioner current-version).${BITBUCKET_BUILD_NUMBER}-dev
-      - pipe: docker://bitbucketpipelines/bitbucket-pipe-release:3.2.2
+      - pipe: atlassian/bitbucket-pipe-release:4.0.1
         variables:
           DOCKERHUB_USERNAME: $DOCKERHUB_USERNAME
           DOCKERHUB_PASSWORD: $DOCKERHUB_PASSWORD
@@ -20,6 +20,7 @@ release-dev: &release-dev
           VERSION: ${VERSION}
     services:
       - docker
+
 
 test: &test
   parallel:
@@ -45,13 +46,13 @@ push: &push
     image: python:3.7
     size: 2x
     script:
-    - pipe: docker://bitbucketpipelines/bitbucket-pipe-release:3.2.2
-      variables:
-        DOCKERHUB_USERNAME: $DOCKERHUB_USERNAME
-        DOCKERHUB_PASSWORD: $DOCKERHUB_PASSWORD
-        IMAGE: bitbucketpipelines/$BITBUCKET_REPO_SLUG
+      - pipe: atlassian/bitbucket-pipe-release:4.0.1
+        variables:
+          DOCKERHUB_USERNAME: $DOCKERHUB_USERNAME
+          DOCKERHUB_PASSWORD: $DOCKERHUB_PASSWORD
+          IMAGE: bitbucketpipelines/$BITBUCKET_REPO_SLUG
     services:
-    - docker
+      - docker
 
 
 pipelines:
