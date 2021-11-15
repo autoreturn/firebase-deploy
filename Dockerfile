@@ -12,7 +12,7 @@ RUN apt-get update \
     && apt-get install --no-install-recommends  -y \
      nodejs=12.* \
     && npm install -g n@6.7.0 && n 14 && n 8 && n 10 && n 12 \
-    && npm install -g firebase-tools@9.10.0 \
+    && npm install -g firebase-tools@9.* \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
