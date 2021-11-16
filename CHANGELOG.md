@@ -1,6 +1,10 @@
 # Changelog
 Note: version releases in the 0.x.y range may introduce breaking changes.
 
+## 1.3.0
+
+- minor: Update firebase-tools to version 9.*.
+
 ## 1.2.0
 
 - minor: Bump bitbucket-pipes-toolkit -> 2.2.0.
