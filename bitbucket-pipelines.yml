@@ -1,5 +1,5 @@
 image:
-  name: atlassian/default-image:2
+  name: atlassian/default-image:3
 
 
 release-dev: &release-dev
@@ -11,7 +11,7 @@ release-dev: &release-dev
     script:
       - pip install semversioner
       - VERSION=$(semversioner current-version).${BITBUCKET_BUILD_NUMBER}-dev
-      - pipe: atlassian/bitbucket-pipe-release:4.0.1
+      - pipe: atlassian/bitbucket-pipe-release:4.2.0
         variables:
           DOCKERHUB_USERNAME: $DOCKERHUB_USERNAME
           DOCKERHUB_PASSWORD: $DOCKERHUB_PASSWORD
@@ -46,7 +46,7 @@ push: &push
     image: python:3.7
     size: 2x
     script:
-      - pipe: atlassian/bitbucket-pipe-release:4.0.1
+      - pipe: atlassian/bitbucket-pipe-release:4.2.0
         variables:
           DOCKERHUB_USERNAME: $DOCKERHUB_USERNAME
           DOCKERHUB_PASSWORD: $DOCKERHUB_PASSWORD
