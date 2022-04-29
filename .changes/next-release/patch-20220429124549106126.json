@@ -1,0 +1,4 @@
+{
+  "type": "patch",
+  "description": "Internal maintenance: Update pipe version of bitbucket-pipe-release and image version of default-image."
+}
