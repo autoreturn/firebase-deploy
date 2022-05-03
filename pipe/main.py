@@ -157,7 +157,7 @@ class FirebaseDeploy(Pipe):
                                 stderr=sys.stderr)
 
         if result.returncode != 0:
-            self.fail(message=f'Deployment failed.')
+            self.fail(message='Deployment failed.')
 
         self.success(f'Successfully deployed project {project}. '
                      f'Project link: https://console.firebase.google.com/project/{project}/overview')
