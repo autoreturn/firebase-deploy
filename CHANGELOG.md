@@ -1,6 +1,11 @@
 # Changelog
 Note: version releases in the 0.x.y range may introduce breaking changes.
 
+## 1.3.1
+
+- patch: Internal maintenance: Update package versions in requirements and test requirements.
+- patch: Internal maintenance: Update pipe version of bitbucket-pipe-release and image version of default-image.
+
 ## 1.3.0
 
 - minor: Update firebase-tools to version 9.*.
@@ -105,4 +110,3 @@ Note: version releases in the 0.x.y range may introduce breaking changes.
 
 - minor: Initial release
 - patch: Fixed CI scripts
-

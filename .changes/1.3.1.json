@@ -1,0 +1,10 @@
+[
+  {
+    "description": "Internal maintenance: Update package versions in requirements and test requirements.",
+    "type": "patch"
+  },
+  {
+    "description": "Internal maintenance: Update pipe version of bitbucket-pipe-release and image version of default-image.",
+    "type": "patch"
+  }
+]
