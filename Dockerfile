@@ -1,4 +1,4 @@
-FROM python:3.7-slim
+FROM python:3.10-slim
 
 # https://github.com/nodesource/distributions/blob/master/README.md#installation-instructions
 
@@ -8,11 +8,11 @@ RUN apt-get update \
     && apt-get install --no-install-recommends -y \
      curl=7.* \
      gnupg2=2.* \
-    && curl -sL https://deb.nodesource.com/setup_12.x | bash - \
+    && curl -sL https://deb.nodesource.com/setup_16.x | bash - \
     && apt-get install --no-install-recommends  -y \
-     nodejs=12.* \
-    && npm install -g n@6.7.0 && n 14 && n 8 && n 10 && n 12 \
-    && npm install -g firebase-tools@9.* \
+     nodejs=16.* \
+    && npm install -g n@6.7.0 && n 8 && n 10 && n 12 && n 14 && n 16 \
+    && npm install -g firebase-tools@10.* \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 

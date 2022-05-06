@@ -1,0 +1,4 @@
+{
+  "type": "major",
+  "description": "Bump NodeJS default version to 16 LTS."
+}

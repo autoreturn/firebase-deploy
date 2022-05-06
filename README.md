@@ -38,11 +38,11 @@ For Firebase Hosting, a firebase.json configuration file is required.
 
 NodeJS environment:
 
-For NodeJS environment pipe uses version 12 LTS by default. Supported LTS and 8 versions.
-The version provided for the `engines` field of the `package.json` file in your `functions/` directory will be used as NodeJS version inside pipe's docker container.
+For [NodeJS][NodeJS] environment pipe uses version 16 LTS by default. Supported LTS 14 and 12, 10, 8 versions.
+The version provided for the `engines` field of the `package.json` file in your `functions/` directory will be used as NodeJS version inside pipe's docker container. See more details in the [Firebase runtime setup docs][Firebase runtime].
 
 
-** Note! You must provide the same NodeJS version for an image in your `bitbucket-pipelines.yml` file as in your `package.json` file. **
+** Note! You must provide the same NodeJS version for an docker image in your `bitbucket-pipelines.yml` file as in your `package.json` file. **
 
 
 ## Prerequisites
@@ -178,10 +178,12 @@ Copyright (c) 2018 Atlassian and others.
 Apache 2.0 licensed, see [LICENSE.txt](LICENSE.txt) file.
 
 
-[community]: https://community.atlassian.com/t5/forums/postpage/board-id/bitbucket-pipelines-questions?add-tags=pipes,google,deployment,firebase
+[community]: https://community.atlassian.com/t5/forums/postpage/board-id/bitbucket-questions?add-tags=bitbucket-pipelines,pipes,google,deployment,firebase
 [Google service account]: https://cloud.google.com/iam/docs/creating-managing-service-account-keys
 [encode private key docs]: https://support.atlassian.com/bitbucket-cloud/docs/variables-and-secrets/#Use-multiple-SSH-keys-in-your-pipeline
 [firebase doc]: https://firebase.google.com/docs/cli/targets#configure_firebasejson_to_use_deploy_targets
 [Installing the Firebase CLI]: https://firebase.google.com/docs/cli/#install_the_firebase_cli
 [command reference]: https://firebase.google.com/docs/cli/#administrative_commands
 [Firebase Deploy Targets]: https://firebase.google.com/docs/cli/targets
+[NodeJS]: https://nodejs.org/en/about/releases/
+[Firebase runtime]: https://firebase.google.com/docs/functions/manage-functions#set_runtime_options
