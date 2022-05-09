@@ -1,0 +1,14 @@
+[
+  {
+    "description": "Bump NodeJS default version to 16 LTS.",
+    "type": "major"
+  },
+  {
+    "description": "Bump firebase-tools version to 10.",
+    "type": "major"
+  },
+  {
+    "description": "Internal maintenance: Bump base docker image to python:3.10-slim.",
+    "type": "minor"
+  }
+]
