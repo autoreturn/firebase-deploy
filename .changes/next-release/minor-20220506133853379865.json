@@ -1,0 +1,4 @@
+{
+  "type": "minor",
+  "description": "Internal maintenance: Bump base docker image to python:3.10-slim."
+}
