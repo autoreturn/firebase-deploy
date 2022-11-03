@@ -20,15 +20,15 @@ Add the following snippet to the script section of your `bitbucket-pipelines.yml
 
 ## Variables
 
-| Variable              | Usage                                                       |
-| --------------------- | ----------------------------------------------------------- |
-| KEY_FILE              | base64 encoded content of Key file for a [Google service account][Google service account]. To encode this content, follow [encode private key docs][encode private key docs].|
-| FIREBASE_TOKEN        | Firebase API key. Deprecated: recommended to use KEY_FILE variable|
-| PROJECT_ID            | Firebase project ID. Default: `default` (the pipe will use **.firebaserc** file to get the default project id.   |
-| MESSAGE               | Deployment message. Default: `Deploy ${BITBUCKET_COMMIT} from https://bitbucket.org/${BITBUCKET_WORKSPACE}/${BITBUCKET_REPO_SLUG}` |
-| EXTRA_ARGS            | Extra arguments to be passed to the Firebase CLI (see Firebase docs for more details). Default: `'`.
-| MULTI_SITES_CONFIG    | JSON document: list of dictionaries containing mapping TARGET to RESOURCE(s). Provide targets defined in your firebase.json. See how to configure firebase.json in [firebase doc][firebase doc]|
-| DEBUG                 | Turn on extra debug information. Default: `false`. |
+| Variable           | Usage                                                                                                                                                                                           |
+|--------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| KEY_FILE           | base64 encoded content of Key file for a [Google service account][Google service account]. To encode this content, follow [encode private key docs][encode private key docs].                   |
+| FIREBASE_TOKEN     | Firebase API key. Deprecated: recommended to use KEY_FILE variable                                                                                                                              |
+| PROJECT_ID         | Firebase project ID. Default: `default` (the pipe will use **.firebaserc** file to get the default project id.                                                                                  |
+| MESSAGE            | Deployment message. Default: `Deploy ${BITBUCKET_COMMIT} from https://bitbucket.org/${BITBUCKET_WORKSPACE}/${BITBUCKET_REPO_SLUG}`                                                              |
+| EXTRA_ARGS         | Extra arguments to be passed to the Firebase CLI (see Firebase docs for more details). Default: `'`.                                                                                            |
+| MULTI_SITES_CONFIG | JSON document: list of dictionaries containing mapping TARGET to RESOURCE(s). Provide targets defined in your firebase.json. See how to configure firebase.json in [firebase doc][firebase doc] |
+| DEBUG              | Turn on extra debug information. Default: `false`.                                                                                                                                              |
 
 _(*) = required variable._
 

@@ -5,17 +5,18 @@ image:
 release-dev: &release-dev
   step:
     name: Release development version
-    image: python:3.7
+    image: python:3.10
     size: 2x
     trigger: manual
     script:
       - pip install semversioner
       - VERSION=$(semversioner current-version).${BITBUCKET_BUILD_NUMBER}-dev
-      - pipe: atlassian/bitbucket-pipe-release:4.2.0
+      - pipe: atlassian/bitbucket-pipe-release:5.0.1
         variables:
-          DOCKERHUB_USERNAME: $DOCKERHUB_USERNAME
-          DOCKERHUB_PASSWORD: $DOCKERHUB_PASSWORD
-          IMAGE: bitbucketpipelines/$BITBUCKET_REPO_SLUG
+          REGISTRY_USERNAME: $REGISTRY_USERNAME
+          REGISTRY_PASSWORD: $REGISTRY_PASSWORD
+          IMAGE: docker-public.packages.atlassian.com/bitbucketpipelines/$BITBUCKET_REPO_SLUG
+          REGISTRY_URL: docker-public.packages.atlassian.com
           GIT_PUSH: 'false'
           VERSION: ${VERSION}
     services:
@@ -29,28 +30,35 @@ test: &test
         image: python:3.7
         size: 2x
         script:
-        - pip install -r test/requirements.txt
-        - pytest test/test.py --verbose --capture=no
-        - flake8 --ignore E501,E125
+          - pip install -r test/requirements.txt
+          - pytest test/test.py --verbose --capture=no
+          - flake8 --ignore E501,E125
         services:
-        - docker
+          - docker
     - step:
         name: Lint the Dockerfile
         image: hadolint/hadolint:latest-debian
         script:
           - hadolint Dockerfile
+    - step:
+        name: Security Scan
+        script:
+          # Run a security scan for sensitive data.
+          # See more security tools at https://bitbucket.org/product/features/pipelines/integrations?&category=security
+          - pipe: atlassian/git-secrets-scan:0.6.1
 
 push: &push
   step:
     name: Push and Tag
-    image: python:3.7
+    image: python:3.10
     size: 2x
     script:
-      - pipe: atlassian/bitbucket-pipe-release:4.2.0
+      - pipe: atlassian/bitbucket-pipe-release:5.0.1
         variables:
-          DOCKERHUB_USERNAME: $DOCKERHUB_USERNAME
-          DOCKERHUB_PASSWORD: $DOCKERHUB_PASSWORD
-          IMAGE: bitbucketpipelines/$BITBUCKET_REPO_SLUG
+          REGISTRY_USERNAME: $REGISTRY_USERNAME
+          REGISTRY_PASSWORD: $REGISTRY_PASSWORD
+          IMAGE: docker-public.packages.atlassian.com/bitbucketpipelines/$BITBUCKET_REPO_SLUG
+          REGISTRY_URL: docker-public.packages.atlassian.com
     services:
       - docker
 
