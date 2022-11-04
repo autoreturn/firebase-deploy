@@ -1,6 +1,11 @@
 # Changelog
 Note: version releases in the 0.x.y range may introduce breaking changes.
 
+## 3.0.0
+
+- major: Bump firebase-tools version to 11.
+- patch: Internal maintenance: update release process.
+
 ## 2.0.0
 
 - major: Bump NodeJS default version to 16 LTS.

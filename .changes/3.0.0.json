@@ -1,0 +1,10 @@
+[
+  {
+    "description": "Bump firebase-tools version to 11.",
+    "type": "major"
+  },
+  {
+    "description": "Internal maintenance: update release process.",
+    "type": "patch"
+  }
+]
