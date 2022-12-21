@@ -12,6 +12,7 @@ from bitbucket_pipes_toolkit import Pipe, get_variable
 
 schema = {
     'FIREBASE_TOKEN': {'required': False, 'type': 'string'},
+    'FIREBASE_COMMAND': {'required': False, 'type':'string', 'default': 'deploy'},
     'KEY_FILE': {'required': False, 'type': 'string'},
     'PROJECT_ID': {'required': False, 'type': 'string', 'nullable': True, 'default': None},
     'MESSAGE': {'type': 'string', 'required': False, 'nullable': True, 'default': None},
@@ -42,6 +43,7 @@ class FirebaseDeploy(Pipe):
         self.log_info('Executing the pipe...')
         project = self.get_variable('PROJECT_ID')
         token = self.get_variable('FIREBASE_TOKEN')
+        command = self.get_variable('FIREBASE_COMMAND')
         key_file = self.get_variable('KEY_FILE')
         message = self.get_variable('MESSAGE')
         extra_args = self.get_variable('EXTRA_ARGS')
@@ -143,23 +145,24 @@ class FirebaseDeploy(Pipe):
                     self.fail(f'Command target:apply for MULTI_SITES target failed. Error: {sys.stderr}')
 
         args.extend(['--project', project])
-        args.extend(['deploy', '--message', message])
+        args.extend([command, '--message', message])
 
         args.extend(extra_args.split())
 
-        self.log_info('Starting deployment of the project to Firebase.')
+        self.log_info(f'Starting Firebase {command} command execution.')
 
         result = subprocess.run(args,
                                 check=False,
                                 text=True,
                                 encoding='utf-8',
                                 stdout=sys.stdout,
-                                stderr=sys.stderr)
+                                stderr=sys.stderr,
+                                shell=True)
 
         if result.returncode != 0:
-            self.fail(message='Deployment failed.')
+            self.fail(message='Firebase {command} command execution failed.')
 
-        self.success(f'Successfully deployed project {project}. '
+        self.success(f'Successfully executed Firebase command {command} in project {project}. '
                      f'Project link: https://console.firebase.google.com/project/{project}/overview')
 
 
