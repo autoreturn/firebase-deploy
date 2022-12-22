@@ -16,6 +16,7 @@ schema = {
     'KEY_FILE': {'required': False, 'type': 'string'},
     'PROJECT_ID': {'required': False, 'type': 'string', 'nullable': True, 'default': None},
     'MESSAGE': {'type': 'string', 'required': False, 'nullable': True, 'default': None},
+    'OUTPUT_FILE': {'type': 'string', 'required': False, 'nullable': True, 'default': None},
     'EXTRA_ARGS': {'type': 'string', 'required': False, 'default': ''},
     'MULTI_SITES_CONFIG': {
         'empty': False,
@@ -46,6 +47,7 @@ class FirebaseDeploy(Pipe):
         command = self.get_variable('FIREBASE_COMMAND')
         key_file = self.get_variable('KEY_FILE')
         message = self.get_variable('MESSAGE')
+        output_file = self.get_variable('OUTPUT_FILE')
         extra_args = self.get_variable('EXTRA_ARGS')
         debug = self.get_variable('DEBUG')
 
@@ -145,19 +147,31 @@ class FirebaseDeploy(Pipe):
                     self.fail(f'Command target:apply for MULTI_SITES target failed. Error: {sys.stderr}')
 
         args.extend(['--project', project])
-        args.extend([command, '--message', message])
+        args.append(command)
+
+        if command == 'deploy':
+            args.extend(['--message', message])
 
         args.extend(extra_args.split())
 
-        self.log_info(f'Starting Firebase {command} command execution.')
 
-        result = subprocess.run(args,
-                                check=False,
-                                text=True,
-                                encoding='utf-8',
-                                stdout=sys.stdout,
-                                stderr=sys.stderr,
-                                shell=True)
+        self.log_info(f'Starting Firebase {command} command execution: {args}.')
+
+        if output_file is None:
+            result = subprocess.run(args,
+                                    check=False,
+                                    text=True,
+                                    encoding='utf-8',
+                                    stdout=sys.stdout,
+                                    stderr=sys.stderr)
+        else:
+            with open(output_file, 'w') as fd:
+                result = subprocess.run(args,
+                                        check=False,
+                                        text=True,
+                                        encoding='utf-8',
+                                        stdout=fd,
+                                        stderr=sys.stderr)
 
         if result.returncode != 0:
             self.fail(message='Firebase {command} command execution failed.')
