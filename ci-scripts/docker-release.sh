@@ -9,9 +9,9 @@
 set -ex
 
 IMAGE=$1
-VERSION=$(semversioner current-version)
+VERSION=2.0.0-2
 
 echo ${DOCKERHUB_PASSWORD} | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
 docker build -t ${IMAGE} .
-docker tag ${IMAGE} ${IMAGE}:${VERSION}
-docker push ${IMAGE}
+docker tag ${IMAGE}:${VERSION}
+docker push ${IMAGE}:${VERSION}
