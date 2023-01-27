@@ -7,7 +7,7 @@ Deploy your code to [Firebase](https://firebase.google.com/).
 Add the following snippet to the script section of your `bitbucket-pipelines.yml` file:
 
 ```yaml
-- pipe: atlassian/firebase-deploy:2.0.0
+- pipe: atlassian/firebase-deploy:2.0.0-1
   variables:
     KEY_FILE: '<string>'
     FIREBASE_TOKEN: '<string>'

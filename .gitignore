@@ -38,3 +38,4 @@ identity
 .aws/
 .gcp/
 .kube/
+.idea/

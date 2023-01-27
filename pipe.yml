@@ -1,15 +1,15 @@
 name: Firebase deploy
-image: bitbucketpipelines/firebase-deploy:2.0.0
+image: autoreturn/firebase-deploy:2.0.0-1
 description: Deploy your code to Firebase using this pipe.
 category: Deployment
-repository: https://bitbucket.org/atlassian/firebase-deploy
+repository: https://bitbucket.org/autoreturn/firebase-deploy
 vendor:
   name: Google
   website: https://www.google.com/
 maintainer:
-  name: Atlassian
-  website: https://www.atlassian.com/
+  name: AutoReturn
+  website: https://www.autoreturn.com/
 tags:
     - deployment
     - firebase
-  
+

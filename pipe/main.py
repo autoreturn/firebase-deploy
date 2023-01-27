@@ -12,9 +12,11 @@ from bitbucket_pipes_toolkit import Pipe, get_variable
 
 schema = {
     'FIREBASE_TOKEN': {'required': False, 'type': 'string'},
+    'FIREBASE_COMMAND': {'required': False, 'type':'string', 'default': 'deploy'},
     'KEY_FILE': {'required': False, 'type': 'string'},
     'PROJECT_ID': {'required': False, 'type': 'string', 'nullable': True, 'default': None},
     'MESSAGE': {'type': 'string', 'required': False, 'nullable': True, 'default': None},
+    'OUTPUT_FILE': {'type': 'string', 'required': False, 'nullable': True, 'default': None},
     'EXTRA_ARGS': {'type': 'string', 'required': False, 'default': ''},
     'MULTI_SITES_CONFIG': {
         'empty': False,
@@ -42,8 +44,10 @@ class FirebaseDeploy(Pipe):
         self.log_info('Executing the pipe...')
         project = self.get_variable('PROJECT_ID')
         token = self.get_variable('FIREBASE_TOKEN')
+        command = self.get_variable('FIREBASE_COMMAND')
         key_file = self.get_variable('KEY_FILE')
         message = self.get_variable('MESSAGE')
+        output_file = self.get_variable('OUTPUT_FILE')
         extra_args = self.get_variable('EXTRA_ARGS')
         debug = self.get_variable('DEBUG')
 
@@ -143,23 +147,36 @@ class FirebaseDeploy(Pipe):
                     self.fail(f'Command target:apply for MULTI_SITES target failed. Error: {sys.stderr}')
 
         args.extend(['--project', project])
-        args.extend(['deploy', '--message', message])
+        args.append(command)
+
+        if command == 'deploy':
+            args.extend(['--message', message])
 
         args.extend(extra_args.split())
 
-        self.log_info('Starting deployment of the project to Firebase.')
 
-        result = subprocess.run(args,
+        self.log_info(f'Starting Firebase {command} command execution: {args}.')
+
+        if output_file is None:
+            result = subprocess.run(args,
                                 check=False,
                                 text=True,
                                 encoding='utf-8',
                                 stdout=sys.stdout,
                                 stderr=sys.stderr)
+        else:
+            with open(output_file, 'w') as fd:
+                result = subprocess.run(args,
+                                        check=False,
+                                        text=True,
+                                        encoding='utf-8',
+                                        stdout=fd,
+                                        stderr=sys.stderr)
 
         if result.returncode != 0:
-            self.fail(message='Deployment failed.')
+            self.fail(message='Firebase {command} command execution failed.')
 
-        self.success(f'Successfully deployed project {project}. '
+        self.success(f'Successfully executed Firebase command {command} in project {project}. '
                      f'Project link: https://console.firebase.google.com/project/{project}/overview')
 
 
