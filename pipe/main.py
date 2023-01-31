@@ -107,7 +107,7 @@ class FirebaseDeploy(Pipe):
         if message is None:
             message = get_variable('MESSAGE', default=f'Deploy {commit} from https://bitbucket.org/{workspace}/{repo}')
 
-        args = ['firebase', ]
+        args = ['node', '/root/firebase-tools/lib/bin/firebase.js', ]
         if key_file:
             key_content = base64.b64decode(key_file)
             with open(KEY_FILE_LOCATION, 'w') as f:

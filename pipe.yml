@@ -1,5 +1,5 @@
 name: Firebase deploy
-image: autoreturn/firebase-deploy:2.0.0-2
+image: autoreturn/firebase-deploy:3.0.0-2
 description: Deploy your code to Firebase using this pipe.
 category: Deployment
 repository: https://bitbucket.org/autoreturn/firebase-deploy
