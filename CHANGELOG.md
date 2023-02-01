@@ -1,25 +1,6 @@
 # Changelog
 Note: version releases in the 0.x.y range may introduce breaking changes.
 
-## 2.0.0
-
-- major: Bump NodeJS default version to 16 LTS.
-- major: Bump firebase-tools version to 10.
-- minor: Internal maintenance: Bump base docker image to python:3.10-slim.
-
-## 1.3.1
-
-- patch: Internal maintenance: Update package versions in requirements and test requirements.
-- patch: Internal maintenance: Update pipe version of bitbucket-pipe-release and image version of default-image.
-
-## 1.3.0
-
-- minor: Update firebase-tools to version 9.*.
-
-## 1.2.0
-
-- minor: Bump bitbucket-pipes-toolkit -> 2.2.0.
-
 ## 1.1.0
 
 - minor: Bump firebase-tools to version 9.10.0.
