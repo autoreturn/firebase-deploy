@@ -2,6 +2,6 @@ name: Firebase deploy
 description: Deploy your code to Firebase using this pipe.
 runs:
   using: 'docker'
-  image: 'autoreturn/firebase-deploy:1.1.0-nodejs16'
+  image: 'docker://autoreturn/firebase-deploy:1.1.0-nodejs16'
 
 
