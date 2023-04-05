@@ -1,5 +1,21 @@
 name: Firebase deploy
 description: Deploy your code to Firebase using this pipe.
+inputs:
+  KEY_FILE:
+    description: 'Path to the service account key file for your Firebase project'
+    required: true
+  PROJECT_ID:
+    description: 'The project ID of your Firebase project'
+    required: true
+  FIREBASE_COMMAND:
+    description: 'The Firebase command to run (e.g. functions:config:get)'
+    required: false
+  OUTPUT_FILE:
+    description: 'The file to output the runtime config to'
+    required: false
+  EXTRA_ARGS: 
+    description: 'Extra arguments'
+    required: false
 runs:
   using: 'docker'
   image: 'docker://autoreturn/firebase-deploy:1.1.0-nodejs16'
