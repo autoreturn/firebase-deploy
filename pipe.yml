@@ -1,0 +1,14 @@
+name: Firebase deploy
+image: autoreturn/firebase-deploy:3.0.0-1
+description: Deploy your code to Firebase using this pipe.
+category: Deployment
+repository: https://bitbucket.org/autoreturn/firebase-deploy
+vendor:
+  name: Google
+  website: https://www.google.com/
+maintainer:
+  name: AutoReturn
+  website: https://www.autoreturn.com/
+tags:
+  - deployment
+  - firebase
